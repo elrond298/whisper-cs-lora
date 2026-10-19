@@ -155,8 +155,8 @@ uv run python summarize.py
 - `artifacts/error_review_40.json`：固定种子抽取的 40 条 mixed 样例；AI 复核报告在 `reports/ERROR_ANALYSIS.md`。
 - `reports/RESULTS.md`：由 `summarize.py` 生成；`reports/FINAL_REPORT.md`、`ERROR_ANALYSIS.md`、`VERIFICATION.md` 为 AI 整理的非自动汇总文档。
 - `evidence/`：过程记录，不是结论——训练/评测原始日志（`logs/`）、里程碑与中断说明（`milestones/`）、审查与测试快照（`reviews/`）、机器核验 JSON（`checks/`）。引用结论仍以 `reports/` 与 `artifacts/` 为准，索引见 `evidence/README.md`。
-- `SHA256SUMS`：本版 101 个交付文件的 SHA-256 清单。解压后运行 `sha256sum -c SHA256SUMS` 核对完整性；修改代码、文档或派生文件后需要重新生成清单，不能继续引用旧校验结论。该清单与 `EXTERNAL_SHA256SUMS` 描述的是两个归档包内部的结构；仓库工作树在本版交付后做过目录整理（见 `evidence/README.md`），路径可能与清单不同，核验请在归档解压目录执行。
+- 校验清单：每个归档包内部各带一份清单（主包 `SHA256SUMS` 101 项、外部补充包 `EXTERNAL_SHA256SUMS` 69 项，均不含自身）。清单描述归档内部的路径，仓库工作树不保留副本——本版归档后目录已整理（见 [`evidence/README.md`](../evidence/README.md)），工作树与清单不再对应，核验须在归档解压目录执行 `sha256sum -c`。
 - `delivery/asr-finetune-complete.tar.gz`：可移交包，不含 `.venv`、基础模型缓存和 `data/` 特征。
-- `delivery/asr-external-eval.tar.gz`：外部验证补充包（约 7.7 MiB，70 个文件，`EXTERNAL_SHA256SUMS` 校验其中 69 个，不含清单自身）。含代码、方法、汇总指标、FLEURS 复算材料、6 个校验 tokenizer 文件与 B/C 各 4 个身份文件；不含基础模型权重、音频，也不含 CS-Dialogue 逐条参考与预测，因此公开包不能独立复算 CS。许可与转交边界见 [EXTERNAL_DATA_LICENSES](EXTERNAL_DATA_LICENSES.md)。包内部的入口页是归档里的 `EXTERNAL_EVAL.md`（冻结副本，本仓库不再保留同一份）。
+- `delivery/asr-external-eval.tar.gz`：外部验证补充包（约 7.7 MiB，70 个文件；包内 `EXTERNAL_SHA256SUMS` 校验其中 69 个，不含清单自身）。含代码、方法、汇总指标、FLEURS 复算材料、6 个校验 tokenizer 文件与 B/C 各 4 个身份文件；不含基础模型权重、音频，也不含 CS-Dialogue 逐条参考与预测，因此公开包不能独立复算 CS。许可与转交边界见 [EXTERNAL_DATA_LICENSES](EXTERNAL_DATA_LICENSES.md)。包内部的入口页是归档里的 `EXTERNAL_EVAL.md`（冻结副本，本仓库不再保留同一份）。
 
 **交付核验**：审查后的同版代码、权重与预测已在隔离解压目录通过 **17 项测试、101 个文件哈希和 CPU 指标精确复算**；验证时禁用 GPU、阻断网络连接与 DNS，并使用空模型缓存。正式归档后的结果、大小与哈希另附于 `delivery/verification.json` 和 `.sha256` 文件，避免归档自引用；审查前的 7 项/90 文件快照保存在 `delivery/pre-review/`。核验复用了本机已安装的固定依赖；重新生成仍需准备数据与基础模型。
