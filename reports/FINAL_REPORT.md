@@ -132,7 +132,7 @@ B对A的提升远大于C对B的增益，说明本次域内LoRA微调有效；新
 - 可移交包：`delivery/asr-finetune-complete.tar.gz`；不含 `.venv`、基础模型缓存或 `data/`。本版 101 个文件的校验清单为 `SHA256SUMS`；正式归档后的隔离核验结果及包哈希记录在归档外的 `delivery/verification.json` 与 `.sha256` 文件。
 - **本轮核验**：同版代码、权重与预测的候选归档已在无 GPU、网络连接与 DNS 被阻断、模型缓存为空的解压目录通过 17 项测试；A/B/C 测试指标、B/C 验证指标精确重算，101 个文件哈希在复算前后均一致。两组各 144 个 optimizer 计数均为 800，导出的 144 个 adapter 张量分别与恢复点完全相同。正式归档后的核验由上述外部记录给出；审查前 7 项测试/90 文件的旧快照保存在 `delivery/pre-review/`。
 
-复现评测无需GPU、基础模型或`data/`：安装固定依赖后，可按README“方式2”从保存预测重算单组指标，或运行`uv run python summarize.py`做全量复核。注意`summarize.py`还需要评测身份文件、B/C adapter与训练元数据，只保留预测JSONL不够。从头重训须在隔离解压副本中先把整个`artifacts/`一次性归档（不只是B/C：只归档B/C会让pilot走no-op、A的评测跳过全部行，新硬件的50步标定与零样本基线都不会真正重跑），再按`prepare`→A→pilot→B→C顺序执行；要确认评测是真重跑，应只归档该组三个测试输出文件而保留adapter与训练元数据。完整命令见README方式3/方式4；新机器准备数据/模型需要网络与相应存储。
+复现评测无需GPU、基础模型或`data/`：安装固定依赖后，可按 [REPRODUCE](REPRODUCE.md) 方式 2 从保存预测重算单组指标，或运行`uv run python summarize.py`做全量复核。注意`summarize.py`还需要评测身份文件、B/C adapter与训练元数据，只保留预测JSONL不够。从头重训须在隔离解压副本中先把整个`artifacts/`一次性归档（不只是B/C：只归档B/C会让pilot走no-op、A的评测跳过全部行，新硬件的50步标定与零样本基线都不会真正重跑），再按`prepare`→A→pilot→B→C顺序执行；要确认评测是真重跑，应只归档该组三个测试输出文件而保留adapter与训练元数据。完整命令见 [REPRODUCE](REPRODUCE.md) 方式 3、方式 4；新机器准备数据/模型需要网络与相应存储。
 
 ## 10. 局限
 
