@@ -30,4 +30,4 @@
 - 原 ASCEND 交付的 101 个文件哈希仍通过。
 - CS 的少量异常输出保留在主评分中，没有因结果不好而删除。审查确认其中语言 token 是在正文中再次产生，不是接口把开头前缀剥离导致的误判。
 
-独立修复复核已通过：原 P2 已解决，复核范围内未发现剩余已确认问题；复核重新运行 39 项测试，并对全部 3,150 条预测做 token/文本检查。详见 [独立复核原始记录](EXTERNAL_INDIVIDUAL_REVIEW.md)。最终补充包的隔离检查以 `delivery/external-verification.json` 为准；统计结果见 [外部评测报告](EXTERNAL_EVAL_REPORT.md)。公开补充包不包含 CS 的逐条文本和音频。
+独立修复复核已通过：原 P2 已解决，复核范围内未发现剩余已确认问题；复核重新运行 39 项测试，并对全部 3,150 条预测做 token/文本检查。详见 [独立复核原始记录](EXTERNAL_INDIVIDUAL_REVIEW.md)。最终补充包的隔离检查以 `delivery/external-verification.json` 为准；统计结果见 [外部评测报告](../../reports/EXTERNAL_EVAL_REPORT.md)。公开补充包不包含 CS 的逐条文本和音频。
