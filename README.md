@@ -29,7 +29,7 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 | 代码审查与修复 | 4 项确认问题全部关闭、17 项测试通过；权重、预测与评分未因此改变 | [REVIEW_FIXES](reports/REVIEW_FIXES.md) |
 | 交付核验 | 隔离解压（禁用 GPU、断网）下 17 项测试、101 个文件哈希、CPU 精确复算通过 | [VERIFICATION](reports/VERIFICATION.md) · 第 8 节 |
 | CS-Dialogue 外部验证 | 450 条域外混合语音：A 26.181%、B 12.275%、C 13.231%，C 未复现过采样优势 | 第 3 节 · [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md) |
-| FLEURS 单语保留 | 中文 CER 降约 8pp；英文 WER 分别 +1.047、+0.914pp | [EXTERNAL_EVAL](EXTERNAL_EVAL.md) |
+| FLEURS 单语保留 | 中文 CER 降约 8pp；英文 WER 分别 +1.047、+0.914pp | [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md) |
 | 重跑与重训 | 四种使用方式：只读结果、CPU 重算、重新生成、隔离副本从头重训 | 第 4 节 |
 
 ## 2. 结果速览
@@ -85,7 +85,7 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 - **过采样优势没有迁移**：C 比 B 差 0.956pp，配对区间跨 0；方向与 ASCEND 测试集（C 低 0.287pp）相反，两次差异都在 1pp 以内。
 - **口径**：MER 沿用本项目 ASCEND 作者兼容口径，不是 CS-Dialogue 论文的原生评测程序，数字不能与论文直接比较。
 - **异常样本**（重复、截断到上限、正文前的语言前缀标记）三组均为 0.4–0.7%。
-- FLEURS 中文/英文的单语保留结果、配对区间与数据许可边界见 [EXTERNAL_EVAL](EXTERNAL_EVAL.md)。
+- FLEURS 中文/英文的单语保留结果、配对区间与数据许可边界见 [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md)。
 
 ## 4. 四种使用方式
 
@@ -242,6 +242,7 @@ uv run python summarize.py
 - `evidence/`：过程记录，不是结论——训练/评测原始日志（`logs/`）、里程碑与中断说明（`milestones/`）、审查与测试快照（`reviews/`）、机器核验 JSON（`checks/`）。引用结论仍以 `reports/` 与 `artifacts/` 为准，索引见 `evidence/README.md`。
 - `SHA256SUMS`：本版 101 个交付文件的 SHA-256 清单。解压后运行 `sha256sum -c SHA256SUMS` 核对完整性；修改代码、文档或派生文件后需要重新生成清单，不能继续引用旧校验结论。该清单与 `EXTERNAL_SHA256SUMS` 描述的是两个归档包内部的结构；仓库工作树在本版交付后做过目录整理（见 `evidence/README.md`），路径可能与清单不同，核验请在归档解压目录执行。
 - `delivery/asr-finetune-complete.tar.gz`：可移交包，不含 `.venv`、基础模型缓存和 `data/` 特征。
+- `delivery/asr-external-eval.tar.gz`：外部验证补充包（约 7.7 MiB，70 个文件，`EXTERNAL_SHA256SUMS` 校验其中 69 个，不含清单自身）。含代码、方法、汇总指标、FLEURS 复算材料、6 个校验 tokenizer 文件与 B/C 各 4 个身份文件；不含基础模型权重、音频，也不含 CS-Dialogue 逐条参考与预测，因此公开包不能独立复算 CS。许可与转交边界见 [EXTERNAL_DATA_LICENSES](reports/EXTERNAL_DATA_LICENSES.md)。包内部的入口页是归档里的 `EXTERNAL_EVAL.md`（冻结副本，本仓库不再保留同一份）。
 
 **交付核验**：审查后的同版代码、权重与预测已在隔离解压目录通过 **17 项测试、101 个文件哈希和 CPU 指标精确复算**；验证时禁用 GPU、阻断网络连接与 DNS，并使用空模型缓存。正式归档后的结果、大小与哈希另附于 `delivery/verification.json` 和 `.sha256` 文件，避免归档自引用；审查前的 7 项/90 文件快照保存在 `delivery/pre-review/`。核验复用了本机已安装的固定依赖；重新生成仍需准备数据与基础模型。
 
