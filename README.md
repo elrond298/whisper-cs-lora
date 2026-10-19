@@ -1,23 +1,23 @@
-# ASCEND × Whisper-small LoRA（RTX 4060 Laptop 8GB）
+# Whisper-small LoRA 微调：ASCEND 中英混说语音（RTX 4060 Laptop 8GB）
 
-在 ASCEND 语音数据上用 LoRA 微调 Whisper-small，检验“把中英混说（mixed）的采样概率提到 50%”能否比自然采样更好。主指标是测试集 mixed 子集的 MER（编辑错误率）。实验协议在训练前冻结，数据来源与论文口径见 [`reports/protocol_sources.md`](reports/protocol_sources.md)。
+本研究在 ASCEND 中英混说语音语料上以 LoRA 微调 Whisper-small，检验提高混合语种样本的采样概率能否优于自然采样。主指标为测试集 mixed 子集的 MER（编辑错误率）。实验协议在训练开始前冻结，数据来源与计分口径见 [`reports/protocol_sources.md`](reports/protocol_sources.md)。
 
 ## 1. 数据、组别、结论与对应文档
 
-**数据**：ASCEND 论文作者发布在 Hugging Face 上的 [`CAiRE/ASCEND`](https://huggingface.co/datasets/CAiRE/ASCEND)，固定到 revision `737e9800ae31be9932ba8464c80366559bd28424`，共 12,314 条、10.62 h。它自带 train / validation / test 三个划分（依次 9,869 / 1,130 / 1,315 条），本项目直接沿用、**没有重新切分**——下文说的“训练集”“测试集”就是这三个划分。
+**数据**：ASCEND 论文作者发布于 Hugging Face 的 [`CAiRE/ASCEND`](https://huggingface.co/datasets/CAiRE/ASCEND)，固定 revision `737e9800ae31be9932ba8464c80366559bd28424`，共 12,314 条、10.62 h。该数据集自带 train / validation / test 三个划分（依次 9,869 / 1,130 / 1,315 条），本研究直接沿用，未重新切分；下文所述“训练集”“测试集”均指上述划分。
 
-**mixed** 是数据集 `language` 字段的一个取值，指同一句话里中英混说（code-switching）：train 划分里 2,739 条，占 27.8%；另两个取值是 `zh` 和 `en`。
+**mixed** 指同一句内中英混说（code-switching），为数据集 `language` 字段的一个取值，在 train 划分中 2,739 条，占 27.8%；另两个取值为 `zh` 与 `en`。
 
-后面反复出现 A、B、C：
+实验包含三个被比较的系统（A、B、C）与一次独立的可行性标定（pilot），定义如下：
 
-| 组别 | 是什么 | 训练量 |
+| 组别 | 定义 | 训练量 |
 |---|---|---|
 | **A** | 原始 Whisper-small，零样本，不训练 | — |
-| **B** | LoRA 微调，按训练集的自然语言比例有放回抽样 | 800 次优化器更新 |
-| **C** | LoRA 微调，把 mixed 的采样概率提到 50%，其余与 B 相同 | 800 次优化器更新 |
-| pilot | 50 步可行性标定，只看显存和耗时够不够，不进任何结论 | 50 次优化器更新 |
+| **B** | LoRA 微调，按训练集自然语种比例有放回抽样 | 800 次优化器更新 |
+| **C** | LoRA 微调，mixed 采样概率提至 50%，其余设置与 B 相同 | 800 次优化器更新 |
+| pilot | 50 步可行性标定，仅核查显存与时耗是否满足要求，不参与结论 | 50 次优化器更新 |
 
-B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每组 800 次优化器更新 = 800 × 8 条 = 6,400 次抽样，不是 6,400 个不同样本。
+B、C 均从同一基础模型出发，LoRA 初始化一致，C 不接续 B 的训练状态。每组 800 次优化器更新对应 800 × 8 = 6,400 次样本抽样；因有放回，去重后的独立样本数为 B 4,698 条、C 4,437 条。
 
 | 主题 | 结论 | 展开 |
 |---|---|---|
@@ -32,7 +32,7 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 | FLEURS 单语保留 | 中文 CER 降约 8pp；英文 WER 分别 +1.047、+0.914pp | [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md) |
 | 重跑与重训 | 四种使用方式：只读结果、CPU 重算、重新生成、隔离副本从头重训 | 第 4 节 |
 
-## 2. 结果速览
+## 2. 主要结果
 
 测试集 1,315 条（mixed 373、中文 685、英文 257）。单位是百分比，越低越好；差值一律为**绝对百分点（pp）**。
 
@@ -46,11 +46,11 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 - 指标口径：MER = 编辑错误数 ÷ 参考计分单位数，中文按字、英文按词混合计数；CER 只统计纯中文子集（按非空白字符）；WER 只统计纯英文子集（按英文词）。`jiwer.mer` 不是本实验的 MER。
 - pp 与百分比的差别：15.918% → 15.631% 是 **−0.287pp**（约 −1.8% 的相对变化），不是“降低 0.287%”。
 
-**结论**：预设方向性门槛通过，收益很小——mixed 净减少 16 个编辑错误、整体净减少 7 个；验证集 mixed 方向相反（B 19.854% → C 20.146%）。全部局限见第 9 节。
+**结论**：预设方向性门槛通过，但效应量很小：mixed 子集净减少 16 个编辑错误，整体净减少 7 个；验证集 mixed 子集方向相反（B 19.854% → C 20.146%）。局限见第 9 节。
 
-### 2.1 这次到底怎样训练的
+### 2.1 实际训练设置
 
-下表数值全部从 `config.json`、`artifacts/` 下的产物和训练日志导出，不是按常见教程写法补的。两组唯一的差别是 mixed 的采样概率。
+下表数值均由 `config.json`、`artifacts/` 下的产物与训练日志导出。两组唯一差异为 mixed 的采样概率。
 
 | 项目 | 实际取值 | 出处 |
 |---|---|---|
@@ -65,14 +65,14 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 | 训练耗时 | 单步中位数 B 8.73 s、C 2.48 s；按每步日志累加 B 2.02 h、C 0.55 h | `evidence/logs/B_train*.log`、`evidence/logs/C_train.log` |
 | 语言前缀 | mixed 与中文都喂 `zh` 语言 token，英文喂 `en`；task 固定 `transcribe`；训练与推理读同一份映射，不存在训练用中文前缀、评测换标签的情况 | `config.json`、`asr.py` |
 
-两个数字的测量范围：
+两处指标的量测范围如下：
 
 - **显存**：PyTorch 进程的 `max_memory_allocated/reserved` 峰值，不含驱动、桌面和其它进程；B 训练期间全卡占用约 6.4 GiB。
-- **耗时**：B 经历一次中断和两次续跑，墙钟 2 h 13 min，同期还有其它 GPU ASR 与视频转码进程；B 最后 300 步平均 2.80 s/步。
+- **时耗**：B 经历一次中断与两次续跑，墙钟 2 h 13 min，同期存在其它 GPU ASR 与视频转码进程；B 最后 300 步平均 2.80 s/步。两组的每步时耗不用于性能比较。
 
 ## 3. CS-Dialogue 外部混合语音验证
 
-用 ASCEND 上训好的三个模型，在未参与训练与选模的 CS-Dialogue 混合语音上再测一次：450 条混合短句、30 位官方测试说话人、100.2 分钟音频；不重训，直接加载 B/C 的第 800 步 adapter 推理。
+为检验结论的跨语料可迁移性，将 A、B、C 三个模型用于未参与训练与选模的 CS-Dialogue 混合语音子集。该子集含 450 条混合短句、30 位官方测试说话人，共 100.2 分钟音频；不重新训练，直接加载 B、C 第 800 步的 adapter 推理。
 
 | 组别 | mixed MER | 相对 A | 异常样本 |
 |---|---:|---:|---:|
@@ -81,42 +81,42 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 | C mixed 过采样 LoRA | 13.231% | −12.950pp | 3/450 |
 | C−B | +0.956pp | 95% 区间 [−0.480, 3.781] | — |
 
-- **微调收益可以迁移**：B/C 在域外混合语音上都比原模型好 12.9–13.9 个百分点。
-- **过采样优势没有迁移**：C 比 B 差 0.956pp，配对区间跨 0；方向与 ASCEND 测试集（C 低 0.287pp）相反，两次差异都在 1pp 以内。
-- **口径**：MER 沿用本项目 ASCEND 作者兼容口径，不是 CS-Dialogue 论文的原生评测程序，数字不能与论文直接比较。
-- **异常样本**（重复、截断到上限、正文前的语言前缀标记）三组均为 0.4–0.7%。
-- FLEURS 中文/英文的单语保留结果、配对区间与数据许可边界见 [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md)。
+- **微调收益可迁移**：B、C 在该域外混合语音上分别比原模型降低 13.906 与 12.950 个百分点。
+- **过采样优势未迁移**：C 比 B 高 0.956pp，配对区间跨 0；方向与 ASCEND 测试集（C 低 0.287pp）相反，两次差异均在 1pp 以内。
+- **计分口径**：MER 沿用本项目 ASCEND 作者兼容口径，非 CS-Dialogue 论文的原生评测程序，两者数值不可直接比较。
+- **异常输出**：重复、截断至上限、正文前的语言前缀标记三类异常，A、B、C 分别为 3/450、2/450、3/450。
+- FLEURS 中文与英文的单语保留结果、配对区间及数据许可边界见 [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md)。
 
 ## 4. 四种使用方式
 
-| 方式 | 做什么 | 需要什么 | 是否需要网络 |
+| 方式 | 操作 | 前置条件 | 是否需要网络 |
 |---|---|---|---|
-| 1 读结果 | 直接看报告 | 无 | 否 |
-| 2 CPU 重算 | 从已保存预测重算指标 | 仓库 + `artifacts/` + 固定版本依赖 | 首次装依赖可能需要 |
-| 3 重新生成 | 用已训练 adapter 重跑预测 | 方式 2 的全部 + 基础模型 + `data/` + CUDA | 准备数据/模型时需要 |
-| 4 从头训练 | 在隔离副本重训 A/pilot/B/C | 方式 3 的全部 + GPU 时间 | 是 |
+| 1 读结果 | 阅读报告 | 无 | 否 |
+| 2 CPU 复算 | 由已保存预测复算指标 | 仓库 + `artifacts/` + 固定版本依赖 | 首次安装依赖可能需要 |
+| 3 重新生成 | 以已训练 adapter 重新生成预测 | 方式 2 的全部 + 基础模型 + `data/` + CUDA | 准备数据/模型时需要 |
+| 4 从头训练 | 在隔离副本中重训 A/pilot/B/C | 方式 3 的全部 + GPU 时间 | 是 |
 
-`uv sync --frozen` 需要能访问软件包源；依赖不随交付包提供，所以新机器首次安装通常需要网络。全新机器上“完全离线”只适用于已装好固定依赖且资产已就位的情况。
+`uv sync --frozen` 需要访问软件包源；依赖不随交付包提供，因此新机器首次安装通常需要网络。完全离线安装仅适用于已具备固定依赖与所需资产的机器。
 
 ### 方式 1：只读结果
 
-不需要 GPU、依赖或数据。第 1 节的“主题 / 结论 / 展开”表把每个结论对应到详细文档；可重算的数字在 [`reports/RESULTS.md`](reports/RESULTS.md)，口径与验收逐项在 [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md)。
+本方式不需要 GPU、依赖或数据。第 1 节的对应表将各结论链接至详细文档；可复算数值见 [`reports/RESULTS.md`](reports/RESULTS.md)，计分口径与验收项见 [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md)。
 
-### 方式 2：CPU 重算指标（不需要 GPU、基础模型或 `data/`）
+### 方式 2：CPU 复算指标（不需要 GPU、基础模型或 `data/`）
 
-只重算某一组指标，只需要该组的预测文件和 `metrics.py`：
+复算单组指标只需该组预测文件与 `metrics.py`：
 
 ```bash
 uv run python -c 'import json; from metrics import summarize; rows=[json.loads(x) for x in open("artifacts/B/test_predictions.jsonl", encoding="utf-8")]; print(json.dumps(summarize(rows), ensure_ascii=False, indent=2))'
 ```
 
-完整复核（A/B/C 全部指标、验收标记、训练汇总）用：
+完整复核（A/B/C 全部指标、验收标记、训练汇总）执行：
 
 ```bash
 uv run python summarize.py
 ```
 
-`summarize.py` 不是“只看预测文件”就够，它还会读取并校验：
+`summarize.py` 除预测文件外还会读取并校验以下内容，仅保留预测文件不足以完成复核：
 
 - `artifacts/{A,B,C}/test_eval_config.json` 与 `test_predictions.jsonl`；
 - `artifacts/B|C/{config,initialization,training_complete}.json` 与 `adapter/adapter_model.safetensors`（用于 SHA-256 身份绑定）；
@@ -128,46 +128,46 @@ uv run python summarize.py
 
 需要方式 2 的全部文件，外加固定 revision 的基础模型和已准备、身份匹配的 `data/`。生成前会核对冻结训练配置、完成步数、配置哈希和当前 adapter 哈希；不符会在加载数据/模型或写文件之前报错。预测固定写入 `artifacts/<group>/<split>_predictions.jsonl`（同目录还有 `<split>_eval_config.json`、`<split>_metrics.json`），**没有可指定输出目录的参数**。
 
-要确认是**真的重新推理**而不是空跑，必须先把旧的测试输出挪走。关键点：
+若要确认生成为真实重新推理而非空跑，须先移走旧的测试输出。要点如下：
 
-- 整组复制后再跑同一命令没有用：文件还在就按样本 ID 续跑，1,315 条都已完成 → 全部跳过，看不到任何新预测。
-- 整组移走会直接失败：`adapter/`、`config.json`、`training_complete.json` 正是评测身份校验的输入。
-- 正确做法是**只归档三个测试输出文件**，保留该组的 adapter 与训练元数据，再跑同一命令。
+- 整组复制后重跑无效：文件仍存在时按样本 ID 续跑，1,315 条均已完成，故全部跳过，不产生新预测。
+- 整组移走会直接失败：`adapter/`、`config.json`、`training_complete.json` 是评测身份校验的输入。
+- 正确做法是仅归档三个测试输出文件，保留该组 adapter 与训练元数据，再执行同一命令。
 
 在解压后的隔离副本（`artifacts/` 完整）中执行：
 
 ```bash
-(                                        # 用子 shell 包住：块内失败只中止本块，不改动你的交互 shell
-  set -e                                 # 任一步失败即停止，不带着半截状态继续
-  mkdir artifacts/B/backup-test-20261019 # 故意不用 -p：备份目录已存在就报错，避免覆盖上一次备份
+(                                        # 用子 shell 包住：块内失败只中止本块，不改动当前 shell
+  set -e                                 # 任一步失败即停止，不保留部分状态
+  mkdir artifacts/B/backup-test-20261019 # 不用 -p：备份目录已存在即报错，避免覆盖既有备份
   mv artifacts/B/test_predictions.jsonl artifacts/B/test_eval_config.json artifacts/B/test_metrics.json artifacts/B/backup-test-20261019/
   uv run python asr.py eval --group B --split test   # predictions 已不在，会重新生成全部 1,315 条
   uv run python summarize.py
 )
 ```
 
-判断依据是日志里按语言推进的生成进度，不是退出码：续跑跳过全部行时退出码同样是 0，所以“命令跑完且成功”不能证明这次真的生成了新预测。
+判断依据是日志中按语言推进的生成进度，而非退出码：续跑跳过全部行时退出码同样为 0，故命令成功退出不表明生成了新预测。
 
 ### 方式 4：从头重训 A/pilot/B/C（在隔离副本中）
 
-当前目录里的 B/C 已经完成 800 步，直接再跑同一训练命令会读取恢复点而立即结束，**不会重训 800 步**。A 和 pilot 也一样：完成的 pilot 训练是 no-op，已有 `test_predictions.jsonl` 的 A 评测会跳过全部行。所以**只归档 B/C 不等于重跑整条流水线**——50 步显存/耗时标定（pilot）和 A 的零样本基线会沿用旧结果，新硬件并没有真正重新标定。
+当前目录中的 B/C 已完成 800 步，以相同训练命令重跑会读取恢复点并立即结束，不会重新训练 800 步；A 与 pilot 同理：已完成的 pilot 训练为 no-op，已有 `test_predictions.jsonl` 的 A 评测会跳过全部行。因此仅归档 B/C 不构成整条流水线的重跑——50 步显存与时耗标定（pilot）与 A 的零样本基线将沿用旧结果，新硬件未经重新标定。
 
-正确做法是把交付包解压到一个**新位置**（里面不要预留 `.venv`、模型缓存或备份目录），先把整个 `artifacts/` 一次性归档，再按第 5 节顺序跑：
+应将交付包解压至**新位置**（其中不预留 `.venv`、模型缓存或备份目录），先将整个 `artifacts/` 一次性归档，再按第 5 节执行：
 
 ```bash
-(                                        # 用子 shell 包住：块内失败只中止本块，不改动你的交互 shell
+(                                        # 用子 shell 包住：块内失败只中止本块，不改动当前 shell
   set -e
-  test ! -e artifacts.delivered          # 已有归档就停下，绝不覆盖上一次交付结果
+  test ! -e artifacts.delivered          # 已有归档则停止，不覆盖上一次交付结果
   mv artifacts artifacts.delivered       # 一次归档 A/pilot/B/C 全部结果，原工作区不被破坏
-  uv run python asr.py prepare           # 交付包不含 data/：首次会下载/构建；只有已存在且身份匹配的缓存才复用
+  uv run python asr.py prepare           # 交付包不含 data/：首次需下载或构建；仅复用已存在且身份匹配的缓存
 )
 ```
 
-归档之后 A、pilot、B、C 才会真正重跑：A 重算零样本基线，pilot 重做 50 步标定，B/C 重新训练 800 步。若连数据特征也要重建，把 `data/` 也归档后再 `prepare`（需要网络与磁盘空间）。完整顺序见第 5 节；正式 B/C 只接受冻结的 800 步预算，50 步标定请用 `pilot` 组。
+归档之后 A、pilot、B、C 才会重新执行：A 重算零样本基线，pilot 重做 50 步标定，B/C 重新训练 800 步。若需重建数据特征，须一并归档 `data/` 后再执行 `prepare`（需要网络与磁盘空间）。完整顺序见第 5 节；正式 B/C 只接受冻结的 800 步预算，50 步标定须使用 `pilot` 组。
 
-**不要**靠删单个文件“重置”某个运行：删掉 `resume.pt` 却留着 `adapter/` 或完成标记，训练会在任何 GPU 访问与写入之前直接报错；完成标记与保存的 checkpoint 步数不一致（例如标记 800、恢复点 400）同样会被拒绝。旧预测或旧评测记录也不会因为训练重跑而变成新证据。
+不得以删除单个文件的方式重置某次运行：删除 `resume.pt` 而保留 `adapter/` 或完成标记时，训练会在任何 GPU 访问与写入之前报错；完成标记与恢复点步数不一致（如标记 800、恢复点 400）同样被拒绝。旧的预测或评测记录也不会因训练重跑而成为新证据。
 
-## 5. 精确命令
+## 5. 完整命令序列
 
 `asr.py` 只支持以下子命令和参数（`--group` 默认 A，`--split` 默认 test）：
 
@@ -180,7 +180,7 @@ uv run python summarize.py
 | `--limit-per-language` | 整数 | 每种语言限条数，用于小规模冒烟评测 |
 | `--config` | 路径 | 默认 `config.json` |
 
-严格顺序：
+命令按以下顺序执行：
 
 ```bash
 uv sync --frozen
@@ -194,31 +194,31 @@ uv run python asr.py eval --group A --split test
 uv run python asr.py train --group pilot --steps 50
 uv run python asr.py eval --group pilot --split validation --limit-per-language 10
 
-# 检查 pilot 显存、耗时、loss 和生成，确认不需要降级后再开始 B
+# 核查 pilot 的显存、时耗、loss 与生成结果，确认无需降级后再启动 B
 uv run python asr.py train --group B
 uv run python asr.py eval --group B --split validation
 uv run python asr.py eval --group B --split test
-# 确认 B 整体测试 MER <= A、输出崩溃率 <5%，否则停下诊断，不能直接进入 C
+# 确认 B 整体测试 MER ≤ A 且输出崩溃率 < 5%，否则停止并诊断，不得进入 C
 uv run python asr.py train --group C
 uv run python asr.py eval --group C --split validation
 uv run python asr.py eval --group C --split test
 uv run python summarize.py
 ```
 
-所有正式训练是 800 个**优化器更新**，不是 800 个 microbatch。每步 8 条、每条补齐到 30 秒。B/C 的初始化 SHA-256、学习率、scheduler、步数、LoRA、数据池与解码配置必须一致；正式运行时不要改根目录 `config.json`。
+所有正式训练均为 800 次**优化器更新**，而非 800 个 microbatch。每步 8 条、每条补齐至 30 秒。B/C 的初始化 SHA-256、学习率、scheduler、步数、LoRA、数据池与解码配置必须一致；正式运行时不得修改根目录 `config.json`。
 
 正常训练不启用同步 CUDA 诊断；只有出现 CUDA 异常时才临时设置 `CUDA_LAUNCH_BLOCKING=1` 定位（见 [`evidence/milestones/B_INTERRUPTION.md`](evidence/milestones/B_INTERRUPTION.md)），定位后 `unset CUDA_LAUNCH_BLOCKING` 再继续。
 
 ## 6. 中断、续跑与重复执行
 
 - 训练每 50 步保存 adapter、optimizer、scaler、scheduler、PyTorch CPU/CUDA、NumPy、Python 随机状态。中断后**用原命令原配置**重跑即可从最后保存点继续。
-- 续跑要求配置完全一致：配置哈希、数据集/模型 revision、前缀映射、完成步数都按冻结值核对，续跑状态以 `resume.pt` 为准；adapter SHA-256 不参与训练核对，只在评测与汇总阶段绑定。想改配置就重训，不要拼接两个配置的产物。
+- 续跑要求配置完全一致：配置哈希、数据集/模型 revision、前缀映射、完成步数均按冻结值核对，续跑状态以 `resume.pt` 为准；adapter SHA-256 不参与训练核对，只在评测与汇总阶段绑定。如需修改配置，应重新训练，不得拼接两套配置的产物。
 - **`resume.pt` 是续跑的权威来源**，完成标记 `training_complete.json` 只有在 `resume.pt` 存在且步数一致时才被采信。出现「有 `adapter/` 或完成标记但没有 `resume.pt`」或「完成标记步数与恢复点不符」时，训练会在**任何 GPU 访问与写入之前**报错，不会静默当成已完成。
 - 日志里可能出现最后保存点之后的重复 step（被丢弃的更新）。汇总时按最后一次相同步数取值；每个日志 step 都对应真实更新。遇到 FP16 跳步会降低 loss scale、用同一批数据重试且不增加完成步数；连续 16 次失败或 loss 非有限才停止。
-- 已完成的 B/C 再用相同命令重跑是**真正的 no-op**（文件字节不变）；`--steps 0` 不会被悄悄替换成 800，而是直接拒绝。
+- 已完成的 B/C 以相同命令重跑为字节级 no-op；`--steps 0` 不会被替换为 800，而是直接拒绝。
 - 生成按样本 ID 断点续跑；同一个预测文件不允许混用不同 adapter 或解码配置。
 
-## 7. 缓存与身份不匹配怎么处理
+## 7. 缓存与身份不匹配的处理
 
 准备缓存和评测结果都带身份校验（数据集/模型名称与 revision、语言前缀、完整配置哈希、完成步数、adapter SHA-256）。缺少新身份字段的旧缓存不会被自动认可。
 
@@ -249,13 +249,13 @@ uv run python summarize.py
 ## 9. 局限
 
 - **单随机种子**：每组只跑一次（seed 42），没有多种子复现、显著性检验或置信区间。
-- **效果很小**：mixed 净减少 16 个编辑错误、整体净减少 7 个；验证集 mixed 方向相反，B 19.854% → C 20.146%。
+- **效应量小**：mixed 子集净减少 16 个编辑错误，整体净减少 7 个；验证集 mixed 子集方向相反（B 19.854% → C 20.146%）。
 - **输入预算按补齐秒数匹配**：每步 8 条 × 30 秒补齐，不是真实语音秒数；C 实际多约 0.850 h 语音，暴露量差异与采样比例混在一起。
 - **测试集参与决策**：测试集用于 B→C 的进入门槛，存在选择偏差；0.3pp 是事先约定的容忍范围，不是统计噪声界。
 - **解码给定语言标签**：mixed 与中文用 `zh`、英文用 `en`，是 oracle 设置，不评估自动语言检测。
 - **错误分析是文本对照**：40 条由 AI 读文本归类，未听音；音近字与疑似翻译的成因只标“疑似”。
 - **计分口径**：ASCEND 作者兼容的对称标点清理、小写与 jieba 分词，保留语气词与重复；未做繁简转换或数字展开。
 - **与论文不可直接对比**：论文 27.05% 的测试 MER 出自 wav2vec 2.0；A 是本项目实测的 Whisper-small 零样本基线。
-- **硬件数字的范围**：显存是 PyTorch 进程峰值；耗时受同期共享负载影响，不反映采样策略的开销。
+- **硬件指标的范围**：显存为 PyTorch 进程峰值；时耗受同期共享负载影响，不反映采样策略的开销。
 - **外部验证只覆盖子集**：CS-Dialogue 450 条、FLEURS 各 300 条，区间不含训练随机性；CS 的逐条参考与预测受许可限制，不随公开包分发。
 - **未覆盖**：SenseVoiceSmall 对比、40% 敏感性组、真人听音、部署端自动语言检测。
