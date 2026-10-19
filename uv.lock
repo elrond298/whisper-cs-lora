@@ -85,48 +85,6 @@ wheels = [
 ]
 
 [[package]]
-name = "ascend-whisper-lora"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "accelerate" },
-    { name = "datasets" },
-    { name = "huggingface-hub" },
-    { name = "jieba" },
-    { name = "jiwer" },
-    { name = "librosa" },
-    { name = "numpy" },
-    { name = "peft" },
-    { name = "psutil" },
-    { name = "soundfile" },
-    { name = "torch" },
-    { name = "transformers" },
-]
-
-[package.optional-dependencies]
-figures = [
-    { name = "matplotlib" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "accelerate", specifier = "==1.8.1" },
-    { name = "datasets", specifier = "==3.6.0" },
-    { name = "huggingface-hub", specifier = "==0.33.4" },
-    { name = "jieba", specifier = "==0.42.1" },
-    { name = "jiwer", specifier = "==4.0.0" },
-    { name = "librosa", specifier = "==0.11.0" },
-    { name = "matplotlib", marker = "extra == 'figures'", specifier = ">=3.11.2" },
-    { name = "numpy", specifier = "==2.2.6" },
-    { name = "peft", specifier = "==0.16.0" },
-    { name = "psutil", specifier = "==7.0.0" },
-    { name = "soundfile", specifier = "==0.13.1" },
-    { name = "torch", specifier = "==2.7.1" },
-    { name = "transformers", specifier = "==4.53.3" },
-]
-provides-extras = ["figures"]
-
-[[package]]
 name = "attrs"
 version = "26.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1400,6 +1358,48 @@ sdist = { url = "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909
 wheels = [
     { url = "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl", hash = "sha256:0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3", size = 135717, upload-time = "2026-09-15T19:29:34.577Z" },
 ]
+
+[[package]]
+name = "whisper-cs-lora"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "accelerate" },
+    { name = "datasets" },
+    { name = "huggingface-hub" },
+    { name = "jieba" },
+    { name = "jiwer" },
+    { name = "librosa" },
+    { name = "numpy" },
+    { name = "peft" },
+    { name = "psutil" },
+    { name = "soundfile" },
+    { name = "torch" },
+    { name = "transformers" },
+]
+
+[package.optional-dependencies]
+figures = [
+    { name = "matplotlib" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "accelerate", specifier = "==1.8.1" },
+    { name = "datasets", specifier = "==3.6.0" },
+    { name = "huggingface-hub", specifier = "==0.33.4" },
+    { name = "jieba", specifier = "==0.42.1" },
+    { name = "jiwer", specifier = "==4.0.0" },
+    { name = "librosa", specifier = "==0.11.0" },
+    { name = "matplotlib", marker = "extra == 'figures'", specifier = ">=3.11.2" },
+    { name = "numpy", specifier = "==2.2.6" },
+    { name = "peft", specifier = "==0.16.0" },
+    { name = "psutil", specifier = "==7.0.0" },
+    { name = "soundfile", specifier = "==0.13.1" },
+    { name = "torch", specifier = "==2.7.1" },
+    { name = "transformers", specifier = "==4.53.3" },
+]
+provides-extras = ["figures"]
 
 [[package]]
 name = "xxhash"
