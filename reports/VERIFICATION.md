@@ -2,7 +2,7 @@
 
 ## 本轮审查后的隔离核验
 
-- 同版候选归档解压后，禁用 GPU、使用空 Hugging Face 缓存，阻断 Python socket 连接与 DNS：17 项测试通过，A/B/C 测试指标与 B/C 验证指标精确复算。
+- 同版候选归档解压后，禁用 GPU、使用空 Hugging Face 缓存，阻断 Python socket 连接与 DNS：17 项测试通过，A/B/C（A 原始模型、B 自然采样、C mixed 过采样）测试指标与 B/C 验证指标精确复算。
 - 101 个交付文件的 SHA-256 在复算前后均一致；B/C 各 144 个 optimizer 状态计数均为 800，144 个 adapter 张量分别与恢复点完全相同。
 - 重建缓存的 9 个文件与原件字节一致；A/B/C 各新生成 12 条、共 36 条预测与原件逐 token 相同；54 个原始实验产物未改动。详见 `evidence/checks/CACHE_REBUILD_VERIFICATION.json` 与 `evidence/checks/REVIEW_RUNTIME_VERIFICATION.json`。
 - 修复见 `REVIEW_FIXES.md`，文档可读性与操作流程由 DeepSeek Flash 修订。失败反例日志记录的是**修复前**表现，不是当前测试失败。

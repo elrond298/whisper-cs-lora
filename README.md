@@ -1,20 +1,31 @@
 # ASCEND × Whisper-small LoRA（RTX 4060 Laptop 8GB）
 
-在官方 ASCEND 数据上微调 Whisper-small，比较两种采样策略：B 自然采样、C 把 mixed 概率提到 50%；A 是不训练的原始 Whisper-small。主指标是测试集 mixed 子集的 MER。实验协议与全部决策见 [`reports/EXPERIMENT.md`](reports/EXPERIMENT.md)（已冻结），数据来源与论文口径见 [`reports/protocol_sources.md`](reports/protocol_sources.md)。
+在 ASCEND 官方语音数据上用 LoRA 微调 Whisper-small，检验“把中英混说（mixed）的采样概率提到 50%”能否比自然采样更好。主指标是测试集 mixed 子集的 MER（编辑错误率）。实验协议在训练前冻结，数据来源与论文口径见 [`reports/protocol_sources.md`](reports/protocol_sources.md)。
 
-## 1. 先看这一页
+## 1. 组别、结论与对应文档
 
-| 你的目的 | 入口 | 需要 GPU？ |
+后面反复出现 A、B、C，先定义清楚。**mixed** 指同一句话里中英混说（code-switching），是 ASCEND 官方训练集里的一个子集：2,739 条，占 27.8%。
+
+| 组别 | 是什么 | 训练量 |
 |---|---|---|
-| 只想知道结论 | 下面第 2 节；完整论证见 [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md) | 否 |
-| 想知道训练到底怎样配的 | 第 2.1 节（数据、LoRA、优化、显存、耗时） | 否 |
-| 核对实验设计、冻结变量 | [`reports/EXPERIMENT.md`](reports/EXPERIMENT.md) | 否 |
-| 看代码审查与修复状态 | [`reports/REVIEW_FIXES.md`](reports/REVIEW_FIXES.md) | 否 |
-| 在 CPU 上重算已保存预测的指标 | 第 3 节“方式 2” | 否 |
-| 重新跑生成与评测 | 第 3 节“方式 3” | 是 |
-| 从头重训 A/pilot/B/C | 第 3 节“方式 4” | 是 |
-| 看 40 条逐例错误 | [`reports/ERROR_ANALYSIS.md`](reports/ERROR_ANALYSIS.md) | 否 |
-| 取可移交包 | 第 7 节 | 否 |
+| **A** | 原始 Whisper-small，零样本，不训练 | — |
+| **B** | LoRA 微调，按训练集的自然语言比例有放回抽样 | 800 次优化器更新 |
+| **C** | LoRA 微调，把 mixed 的采样概率提到 50%，其余与 B 相同 | 800 次优化器更新 |
+| pilot | 50 步可行性标定，只看显存和耗时够不够，不进任何结论 | 50 次优化器更新 |
+
+B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每组 800 次优化器更新 = 800 × 8 条 = 6,400 次抽样，不是 6,400 个不同样本。
+
+| 主题 | 结论 | 展开 |
+|---|---|---|
+| 测试集主结果 | 整体 MER 从 42.141% 降到 16.067%（B）/ 16.008%（C）；C 比 B 的 mixed MER 低 0.287pp，中文 CER 高 0.353pp | 第 2 节 · [FINAL_REPORT](reports/FINAL_REPORT.md) §3 · [RESULTS](reports/RESULTS.md) |
+| 稳定性边界 | 验证集 mixed 方向相反（B 19.854% → C 20.146%，+0.292pp）；单种子、无显著性检验 | [FINAL_REPORT](reports/FINAL_REPORT.md) §4 |
+| 实验协议与冻结变量 | 采样分布是唯一预设变量；步数、学习率、LoRA、种子在训练前冻结 | [EXPERIMENT](reports/EXPERIMENT.md) |
+| 数据与计分口径 | ASCEND 官方划分；MER 按中文计字、英文计词混合计数 | [protocol_sources](reports/protocol_sources.md) · [FINAL_REPORT](reports/FINAL_REPORT.md) §2 |
+| 错误分析 | 40 条 C mixed 逐条文本复核：12 条零编辑错误、28 条有错；是 AI 文本对照，不是真人听音 | [ERROR_ANALYSIS](reports/ERROR_ANALYSIS.md) |
+| 代码审查与修复 | 4 项确认问题全部关闭、17 项测试通过；权重、预测与评分未因此改变 | [REVIEW_FIXES](reports/REVIEW_FIXES.md) |
+| 交付核验 | 隔离解压（禁用 GPU、断网）下 17 项测试、101 个文件哈希、CPU 精确复算通过 | [VERIFICATION](reports/VERIFICATION.md) · 第 7 节 |
+| 外部子集评测 | CS-Dialogue 450 条与 FLEURS 中英各 300 条上的泛化与单语保留结果 | [EXTERNAL_EVAL](EXTERNAL_EVAL.md) |
+| 重跑与重训 | 四种使用方式：只读结果、CPU 重算、重新生成、隔离副本从头重训 | 第 3 节 |
 
 ## 2. 结果速览
 
@@ -30,7 +41,7 @@
 - 指标口径：MER = 编辑错误数 ÷ 参考计分单位数，中文按字、英文按词混合计数；CER 只统计纯中文子集（按非空白字符）；WER 只统计纯英文子集（按英文词）。`jiwer.mer` 不是本实验的 MER。
 - pp 与百分比的差别：15.918% → 15.631% 是 **−0.287pp**（约 −1.8% 的相对变化），不是“降低 0.287%”。
 
-**结论边界**（阅读任何数字前先看这四条）：
+**结论边界**（这四条限定了上表数字能支持什么）：
 
 1. 预设方向性门槛通过，但收益很小：mixed 净减少 16 个编辑错误，整体只净减少 7 个。
 2. **验证集 mixed 方向相反**：B 19.854% → C 20.146%（+0.292pp）。单随机种子、无显著性检验，因此只能说“本次运行有微弱方向性收益”，不能说过采样稳定更优。
@@ -59,7 +70,7 @@
 - **显存**：数字来自 PyTorch 进程的 `max_memory_allocated/reserved`，不含驱动、桌面和其它进程。B 训练期间全卡占用约 6.4 GiB，不能整体算作 Whisper 的需求。
 - **耗时**：B 的中断与两次续跑使墙钟达到 2 h 13 min，且同期有外部 GPU ASR 进程和视频转码争用，per-step 时间被拉长。因此 B/C、B/pilot 的耗时差异反映的是环境争用，不是采样策略的开销差异，**不要拿这组数字做性能对比**。
 
-## 3. 四种使用方式（先选对场景）
+## 3. 四种使用方式
 
 | 方式 | 做什么 | 需要什么 | 是否需要网络 |
 |---|---|---|---|
@@ -72,7 +83,7 @@
 
 ### 方式 1：只读结果
 
-看第 2 节，或 [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md)（结论、配置、验收逐项）、[`reports/RESULTS.md`](reports/RESULTS.md)（自动汇总）、[`reports/ERROR_ANALYSIS.md`](reports/ERROR_ANALYSIS.md)（40 条 AI 文本复核）、[`reports/VERIFICATION.md`](reports/VERIFICATION.md)（交付前一次性核验）。
+不需要 GPU、依赖或数据。第 1 节的“主题 / 结论 / 展开”表把每个结论对应到详细文档；可重算的数字在 [`reports/RESULTS.md`](reports/RESULTS.md)，口径与验收逐项在 [`reports/FINAL_REPORT.md`](reports/FINAL_REPORT.md)。
 
 ### 方式 2：CPU 重算指标（不需要 GPU、基础模型或 `data/`）
 

@@ -1,6 +1,6 @@
 # ASCEND × Whisper-small LoRA：最终实验报告
 
-> 阅读路线：先看下方“结论先行”与第 3 节主表；协议与冻结决策见 `EXPERIMENT.md`，逐例错误见 `ERROR_ANALYSIS.md`，代码审查与修复状态见 `REVIEW_FIXES.md`，自动汇总见 `RESULTS.md`。
+> **组别**：A = 原始 Whisper-small，零样本、不训练；B = LoRA 微调、按自然语言比例采样；C = LoRA 微调、mixed 采样概率 50%，其余同 B。**mixed** 指同一句内中英混说（code-switching）。B、C 均指各自第 800 步的 checkpoint。
 >
 > 单位约定：指标均为百分比，越低越好；差值一律为**绝对百分点（pp）**。MER = 编辑错误数 ÷ 参考计分单位数（中文按字、英文按词混合计数）；CER 为纯中文子集（按非空白字符），WER 为纯英文子集（按英文词）。
 
@@ -102,7 +102,7 @@ B对A的提升远大于C对B的增益，说明本次域内LoRA微调有效；新
 
 残留问题包括英文专名/拼写、词边界、英文被中文替代、中文近音字、语气词跨文字差异。例：privacy→private school，badminton→Bankman腾，Hong Kong→香港。尤其“并不需要→必须要”说明0%输出崩溃并不等于语义正确。切换处声学断句无法仅凭此文本确认，没有编造该类别的发生数。
 
-40条完整参考、预测、分类、备注见ERROR_ANALYSIS.md及evidence/checks/error_analysis_40.json；主结论仍由全部373条mixed评测决定，不用个别样例替代主判断。
+40条完整参考、预测、分类、备注见 [ERROR_ANALYSIS](ERROR_ANALYSIS.md) 及 evidence/checks/error_analysis_40.json；主结论仍由全部373条mixed评测决定，不用个别样例替代主判断。
 
 ## 8. 验收逐项
 
@@ -123,11 +123,12 @@ B对A的提升远大于C对B的增益，说明本次域内LoRA微调有效；新
 ## 9. 交付与复现
 
 - 代码：asr.py（准备、采样、训练、生成）、metrics.py、summarize.py、test_pipeline.py。
-- 协议、依赖与配置：EXPERIMENT.md、protocol_sources.md、根目录config.json/pyproject.toml/uv.lock。
+- 协议、依赖与配置：[EXPERIMENT](EXPERIMENT.md)、[protocol_sources](protocol_sources.md)、根目录 config.json/pyproject.toml/uv.lock。
 - checkpoint：artifacts/B/adapter/、artifacts/C/adapter/；相应resume.pt包含optimizer/scheduler/scaler/RNG；A为固定原模型，没有LoRA adapter。
 - 预测与指标：artifacts/{A,B,C}/test_predictions.jsonl、test_metrics.json；B/C另有完整validation预测与指标。
-- 过程证据：artifacts/{pilot,B,C}/train.jsonl、sampling.json、initialization.json、progress.json、training_complete.json及根目录原始log。
-- 汇总：artifacts/comparison.json、training_summary.json；reports/RESULTS.md可由summarize.py重生成；`artifacts/error_review_40.json`会由该脚本重新抽样生成，AI 文本复核结论（非真人听音）保存在`evidence/checks/error_analysis_40.json`与`ERROR_ANALYSIS.md`，不受其覆盖。
+- 过程证据：artifacts/{pilot,B,C}/train.jsonl、sampling.json、initialization.json、progress.json、training_complete.json 及 `evidence/logs/` 下的原始训练/评测日志。
+- 审查与核验：[REVIEW_FIXES](REVIEW_FIXES.md)（4 项确认问题及关闭状态）、[VERIFICATION](VERIFICATION.md)（隔离解压下的实际核验记录）。
+- 汇总：artifacts/comparison.json、training_summary.json；[reports/RESULTS.md](RESULTS.md) 可由 summarize.py 重生成；`artifacts/error_review_40.json` 会由该脚本重新抽样生成，AI 文本复核结论（非真人听音）保存在 `evidence/checks/error_analysis_40.json` 与 [ERROR_ANALYSIS](ERROR_ANALYSIS.md)，不受其覆盖。
 - 可移交包：`delivery/asr-finetune-complete.tar.gz`；不含 `.venv`、基础模型缓存或 `data/`。本版 101 个文件的校验清单为 `SHA256SUMS`；正式归档后的隔离核验结果及包哈希记录在归档外的 `delivery/verification.json` 与 `.sha256` 文件。
 - **本轮核验**：同版代码、权重与预测的候选归档已在无 GPU、网络连接与 DNS 被阻断、模型缓存为空的解压目录通过 17 项测试；A/B/C 测试指标、B/C 验证指标精确重算，101 个文件哈希在复算前后均一致。两组各 144 个 optimizer 计数均为 800，导出的 144 个 adapter 张量分别与恢复点完全相同。正式归档后的核验由上述外部记录给出；审查前 7 项测试/90 文件的旧快照保存在 `delivery/pre-review/`。依赖复用了已安装的固定环境，不是全新机器离线安装验证。
 

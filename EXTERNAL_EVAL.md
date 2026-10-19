@@ -16,15 +16,15 @@
 - 英文：B/C 分别比 A 差 1.047、0.914 个百分点。区间不含 0，但跨过事先固定的 +0.8 个百分点容忍界限，所以“是否超过容忍范围”证据不足；退化方向不能隐去。
 - CS 上 C 比 B 差 0.956 个百分点，区间跨 0：本次没有复现过采样优势，也不能证明 C 一定更差。
 
-## 按目的选入口
+## 各主题与详细文档
 
-| 我想…… | 看这里 | 要不要 GPU |
+| 主题 | 结论 | 展开 |
 |---|---|---|
-| 只看结果和限制 | 本页 + [完整报告](reports/EXTERNAL_EVAL_REPORT.md) | 否 |
-| 用已有预测在 CPU 上重算指标和区间 | [查看、离线复算和重新推理](reports/EXTERNAL_REPRODUCE.md) 第 3 节 | 否 |
-| 重新生成预测（会加载模型） | 同上第 4–5 节；先读“不要移动原 artifacts/B 或 C” | 是 |
-| 核对抽样规则与数据来源 | [抽样前计划](reports/EXTERNAL_EVAL_PLAN.md) / [官方来源核查](reports/EXTERNAL_EVAL_SOURCES.md) | 否 |
-| 对外转交材料 | [数据许可与转交边界](reports/EXTERNAL_DATA_LICENSES.md) | 否 |
+| 完整结果、区间与限制 | CS 上 B 最好；FLEURS 英文 A 最好，B/C 的退化方向不能隐去 | [完整报告](reports/EXTERNAL_EVAL_REPORT.md) |
+| 数据来源与抽样规则 | CS-Dialogue 450 条（覆盖 30/30 测试说话人）、FLEURS 中英各 300 条，固定 revision | [抽样前计划](reports/EXTERNAL_EVAL_PLAN.md) · [官方来源核查](reports/EXTERNAL_EVAL_SOURCES.md) |
+| 离线复算与重新推理 | 已有预测可在 CPU 上重算指标与区间；重新生成需要加载模型 | [查看、复算、重新推理](reports/EXTERNAL_REPRODUCE.md) §3 / §4–5 |
+| 许可与转交边界 | FLEURS 可带归属转发；CS 逐条材料只留在本地获准目录 | [数据许可与转交边界](reports/EXTERNAL_DATA_LICENSES.md) |
+| 独立审查与修复 | 首轮发现与修复复核、修复后的独立核验 | [审查与修复](reports/EXTERNAL_REVIEW_FIXES.md) · [独立复核](reports/EXTERNAL_INDIVIDUAL_REVIEW.md) |
 
 路径约定：本页链接和正文里的路径都以仓库（或解压后的包）根目录为基准；`reports/` 内的文档也用同一基准，不相对 `reports/` 解析。
 
