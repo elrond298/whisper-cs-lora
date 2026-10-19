@@ -23,3 +23,5 @@
 ## 整理时间
 
 2026-10-19，在两个交付归档（`delivery/asr-finetune-complete.tar.gz`、`delivery/asr-external-eval.tar.gz`）打包完成之后。归档内部仍是最初的扁平结构，其清单 `SHA256SUMS`、`EXTERNAL_SHA256SUMS` 也描述归档内部路径；核验请对归档解压目录执行。
+
+唯一保留的旧路径引用在 `artifacts/external_eval/verification.json` 的 `record` 字段（`reports/EXTERNAL_INDIVIDUAL_REVIEW.md`）：该文件已被 `EXTERNAL_SHA256SUMS` 固定哈希，改路径会让交付包校验失败，因此保持原样，实际文件在 `evidence/reviews/EXTERNAL_INDIVIDUAL_REVIEW.md`。
