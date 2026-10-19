@@ -1,10 +1,14 @@
 # ASCEND × Whisper-small LoRA（RTX 4060 Laptop 8GB）
 
-在 ASCEND 官方语音数据上用 LoRA 微调 Whisper-small，检验“把中英混说（mixed）的采样概率提到 50%”能否比自然采样更好。主指标是测试集 mixed 子集的 MER（编辑错误率）。实验协议在训练前冻结，数据来源与论文口径见 [`reports/protocol_sources.md`](reports/protocol_sources.md)。
+在 ASCEND 语音数据上用 LoRA 微调 Whisper-small，检验“把中英混说（mixed）的采样概率提到 50%”能否比自然采样更好。主指标是测试集 mixed 子集的 MER（编辑错误率）。实验协议在训练前冻结，数据来源与论文口径见 [`reports/protocol_sources.md`](reports/protocol_sources.md)。
 
-## 1. 组别、结论与对应文档
+## 1. 数据、组别、结论与对应文档
 
-后面反复出现 A、B、C，先定义清楚。**mixed** 指同一句话里中英混说（code-switching），是 ASCEND 官方训练集里的一个子集：2,739 条，占 27.8%。
+**数据**：ASCEND 论文作者发布在 Hugging Face 上的 [`CAiRE/ASCEND`](https://huggingface.co/datasets/CAiRE/ASCEND)，固定到 revision `737e9800ae31be9932ba8464c80366559bd28424`，共 12,314 条、10.62 h。它自带 train / validation / test 三个划分（依次 9,869 / 1,130 / 1,315 条），本项目直接沿用、**没有重新切分**——下文说的“训练集”“测试集”就是这三个划分。
+
+**mixed** 是数据集 `language` 字段的一个取值，指同一句话里中英混说（code-switching）：train 划分里 2,739 条，占 27.8%；另两个取值是 `zh` 和 `en`。
+
+后面反复出现 A、B、C：
 
 | 组别 | 是什么 | 训练量 |
 |---|---|---|
@@ -20,7 +24,7 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 | 测试集主结果 | 整体 MER 从 42.141% 降到 16.067%（B）/ 16.008%（C）；C 比 B 的 mixed MER 低 0.287pp，中文 CER 高 0.353pp | 第 2 节 · [FINAL_REPORT](reports/FINAL_REPORT.md) §3 · [RESULTS](reports/RESULTS.md) |
 | 稳定性边界 | 验证集 mixed 方向相反（B 19.854% → C 20.146%，+0.292pp）；单种子、无显著性检验 | [FINAL_REPORT](reports/FINAL_REPORT.md) §4 |
 | 实验协议与冻结变量 | 采样分布是唯一预设变量；步数、学习率、LoRA、种子在训练前冻结 | [EXPERIMENT](reports/EXPERIMENT.md) |
-| 数据与计分口径 | ASCEND 官方划分；MER 按中文计字、英文计词混合计数 | [protocol_sources](reports/protocol_sources.md) · [FINAL_REPORT](reports/FINAL_REPORT.md) §2 |
+| 数据与计分口径 | 沿用数据集自带划分；MER 按中文计字、英文计词混合计数 | [protocol_sources](reports/protocol_sources.md) · [FINAL_REPORT](reports/FINAL_REPORT.md) §2 |
 | 错误分析 | 40 条 C mixed 逐条文本复核：12 条零编辑错误、28 条有错；是 AI 文本对照，不是真人听音 | [ERROR_ANALYSIS](reports/ERROR_ANALYSIS.md) |
 | 代码审查与修复 | 4 项确认问题全部关闭、17 项测试通过；权重、预测与评分未因此改变 | [REVIEW_FIXES](reports/REVIEW_FIXES.md) |
 | 交付核验 | 隔离解压（禁用 GPU、断网）下 17 项测试、101 个文件哈希、CPU 精确复算通过 | [VERIFICATION](reports/VERIFICATION.md) · 第 7 节 |
@@ -54,7 +58,7 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 
 | 项目 | 实际取值 | 出处 |
 |---|---|---|
-| 数据池 | 官方 train 9,869 条 / 8.775 h：mixed 2,739（27.8%，3.617 h）、中文 4,799（48.6%，3.505 h）、英文 2,331（23.6%，1.653 h） | `artifacts/data_audit.json` |
+| 数据池 | train 划分 9,869 条 / 8.775 h：mixed 2,739（27.8%，3.617 h）、中文 4,799（48.6%，3.505 h）、英文 2,331（23.6%，1.653 h） | `artifacts/data_audit.json` |
 | 实际入模条数 | 800 步 × 每步 8 条 = **6,400 次抽样**；有放回采样，去重后 B 4,698 条、C 4,437 条。B 抽到 mixed 1,812 / 中文 3,085 / 英文 1,503（28.3 / 48.2 / 23.5%）；C 为 3,220 / 2,147 / 1,033（50.3 / 33.5 / 16.1%） | `artifacts/{B,C}/sampling.json` |
 | 语音时长 | 两组补齐输入相同：800 × 8 × 30 s = **53.33 h**；其中真实语音 B 5.681 h、C 6.531 h | 同上 |
 | LoRA 作用位置 | `q_proj`、`v_proj`：encoder 12 层 self-attn、decoder 12 层 self-attn 与 cross-attn，共 72 个模块 / 144 个张量；rank 8、alpha 16、dropout 0.05 | `config.json`、`artifacts/{B,C}/adapter/adapter_model.safetensors` |
@@ -170,7 +174,7 @@ uv sync --frozen
 uv run python -m unittest -v test_pipeline
 uv run python asr.py prepare
 
-# A：完整官方测试集
+# A：测试集全量（1,315 条）
 uv run python asr.py eval --group A --split test
 
 # 独立 50 步可行性标定（不用于初始化 B/C）

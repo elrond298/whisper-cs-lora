@@ -1,7 +1,7 @@
 # ASCEND Whisper-small LoRA：预先固定的实验协议与决策记录
 
 ## 目的与范围
-在 RTX 4060 Laptop GPU 8GB 上，以 ASCEND 官方训练集微调 Whisper-small，比较自然采样 B 与 mixed 过采样 C。仅句内中英混合，不扩展到远场、会议或多人重叠语音。A 为不训练的原模型。主指标固定为测试 mixed 子集 MER。
+在 RTX 4060 Laptop GPU 8GB 上，以 ASCEND（论文作者发布于 Hugging Face 的 `CAiRE/ASCEND`，固定 revision 见 `config.json`）自带的 train 划分微调 Whisper-small，比较自然采样 B 与 mixed 过采样 C。仅句内中英混合，不扩展到远场、会议或多人重叠语音。A 为不训练的原模型。主指标固定为测试 mixed 子集 MER。
 
 ## 固定变量
 机器可执行配置见根目录 `config.json`，依赖见 `uv.lock`。基础模型、数据分别固定到 Hugging Face commit，保留官方 train/validation/test。种子 42；B/C 都从同一原模型及相同 LoRA 随机初始化出发，保存 adapter 初始化 SHA-256 验证，不从 B 继续训练 C。

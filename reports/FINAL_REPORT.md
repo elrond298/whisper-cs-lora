@@ -16,7 +16,7 @@ C的mixed MER比B低 **0.287个百分点**，中文CER退化 **0.353个百分点
 |---|---|
 | 硬件 | NVIDIA RTX 4060 Laptop GPU，8GB |
 | 基础模型 | openai/whisper-small；精确revision见config.json |
-| 数据 | CAiRE/ASCEND官方划分；固定revision见config.json |
+| 数据 | CAiRE/ASCEND（论文作者发布，固定 revision 见 config.json）；沿用其自带 train/validation/test 划分，未重新切分 |
 | 有效更新 | B=800，C=800；每组6,400个有效训练样本选择 |
 | 单步输入 | batch=1，梯度累积8；每条补齐30秒，240补齐秒/更新 |
 | 精度与内存 | FP16 autocast，梯度检查点；可训练参数保持FP32 |
@@ -35,7 +35,7 @@ B/C相同配置SHA-256：`df98034d4fc7675394f54e46c7b1ec4a7939a395e8a86beb49583b
 
 ## 2. 数据审计与评测口径
 
-- 官方train/validation/test分别9,869/1,130/1,315条，实际waveform合计8.774909/0.923225/0.917496小时。
+- 数据集自带 train/validation/test 划分分别 9,869/1,130/1,315 条，实际 waveform 合计 8.774909/0.923225/0.917496 小时；未重新切分。
 - train mixed 2,739条，占27.75%，实际3.616870小时；与计划估计2.88小时不同，以固定release实测为准，未改划分或重标。
 - language与文本汉字/拉丁字母启发式差异87/15/6条；主要由[UNK]里的字母造成，不自动视为错标。保留官方language和参考文本。
 - MER为语料级编辑错误数/参考计分单位数；中文按字、英文按词，采用作者兼容的对称标点清理及jieba口径。纯中文CER按非空白字符、纯英文WER按英文计分单位；三组相同。没有见到结果后再做繁简转换或语气词归一化。
