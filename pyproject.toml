@@ -16,5 +16,9 @@ dependencies = [
   "psutil==7.0.0",
   "jieba==0.42.1",
 ]
+
+[project.optional-dependencies]
+figures = ["matplotlib>=3.11.2"]
+
 [tool.uv]
 package = false

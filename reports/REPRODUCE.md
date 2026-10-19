@@ -12,6 +12,7 @@
 | 4 从头训练 | 在隔离副本中重训 A/pilot/B/C | 方式 3 的全部 + GPU 时间 | 是 |
 
 `uv sync --frozen` 需要访问软件包源；依赖不随交付包提供，因此新机器首次安装通常需要网络。完全离线安装仅适用于已具备固定依赖与所需资产的机器。
+`reports/figures/` 下的四张图由 `make_figures.py` 从 `artifacts/` 的指标、抽样记录、训练日志与外部比较摘要生成，不重算预测或区间。绘图依赖声明为可选依赖组 `figures`：`uv sync --extra figures` 后执行 `uv run python make_figures.py`。默认环境（`uv sync --frozen`）不含该依赖，评测与交付路径不受影响。
 
 ### 方式 1：只读结果
 
