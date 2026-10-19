@@ -1,0 +1,5 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.725 seconds.
+Prefix dict has been built successfully.
+{"group": "pilot", "split": "validation_first10_per_language", "metrics": {"overall": {"metric": "MER", "percent": 21.3855421686747, "n": 30, "substitutions": 42, "deletions": 26, "insertions": 3, "reference_units": 332, "collapse_percent": 0.0, "collapse_counts": {}}, "mixed": {"metric": "MER", "percent": 26.582278481012658, "n": 10, "substitutions": 27, "deletions": 14, "insertions": 1, "reference_units": 158, "collapse_percent": 0.0, "collapse_counts": {}}, "zh": {"metric": "CER", "percent": 11.688311688311689, "n": 10, "substitutions": 5, "deletions": 2, "insertions": 2, "reference_units": 77, "collapse_percent": 0.0, "collapse_counts": {}}, "en": {"metric": "WER", "percent": 20.61855670103093, "n": 10, "substitutions": 10, "deletions": 10, "insertions": 0, "reference_units": 97, "collapse_percent": 0.0, "collapse_counts": {}}}}

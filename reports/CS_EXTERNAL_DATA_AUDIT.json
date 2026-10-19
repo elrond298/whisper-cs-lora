@@ -1,0 +1,291 @@
+{
+  "status": "complete_data_preparation_only_no_inference",
+  "source_identity": {
+    "dataset": "BAAI/CS-Dialogue",
+    "revision": "a84770fcdf14072252373a0227321227eaac7dc7",
+    "official_test_rows": 6257,
+    "official_mixed_rows": 1034,
+    "official_test_mixed_speakers": 30,
+    "public_api_gated": false,
+    "authentication_used": false,
+    "reference_authority": "data/index/short_wav/test/text (preserves official privacy masking)",
+    "information_script_mismatch_ids": [
+      "ZH-CN_U1085_S0_2",
+      "ZH-CN_U1086_S0_3"
+    ],
+    "metadata": [
+      {
+        "local_path": "data/external_eval/cs_dialogue/source/Information_Index.txt",
+        "bytes": 6746727,
+        "sha256": "675cccd10d1518be7e2f06e4d9bc47b8f84fe6f8295cafd9da390078a4d1101c"
+      },
+      {
+        "local_path": "data/external_eval/cs_dialogue/source/README.md",
+        "bytes": 6467,
+        "sha256": "ab7b4054e1d57d7186fe335946a36c64008a2e83b1142198f02762408f0514bd"
+      },
+      {
+        "local_path": "data/external_eval/cs_dialogue/source/api.json",
+        "bytes": 7450,
+        "sha256": "8874358db8c19e3bb1690ab74e90191c827d5254f11f059cf68a37bcd08b4463"
+      },
+      {
+        "local_path": "data/external_eval/cs_dialogue/source/text",
+        "bytes": 810268,
+        "sha256": "d206283afa471887556429bc47c10a2187d0c948a10f51577e8ff3db47c5dd51"
+      },
+      {
+        "local_path": "data/external_eval/cs_dialogue/source/tree.json",
+        "bytes": 18318,
+        "sha256": "02848f27d92f41978ed00599564a54f08974b83137e24ed9efb5a89f5cb7f921"
+      },
+      {
+        "local_path": "data/external_eval/cs_dialogue/source/wav.scp",
+        "bytes": 466155,
+        "sha256": "802d321ee0001e5582ce73bdba0cee63f4932905796cf7d464804b3a568375fc"
+      }
+    ],
+    "observed_annotation_tags": {
+      "<FIL/>": 1014,
+      "<SPK/>": 183,
+      "<NON/>": 23
+    }
+  },
+  "protocol": {
+    "seed": 42,
+    "target": "min(500, floor(eligible_mixed_pool/2))",
+    "reference_cleaning": "Remove all <...> annotation tags; collapse whitespace; retain spoken text/punctuation/case",
+    "eligibility": "Official short-wav test <MIX>; no **; cleaned reference has Han and ASCII Latin; decodable finite mono WAV; 16000 Hz; 0 < frames <= 480000; no cropping/resampling",
+    "exclusion_precedence": "**; empty text; nonmixed cleaned text; missing member; invalid format/rate/channels; zero frames; >30 s; full decode failure",
+    "selection": "Sorted IDs, Python Random(42), shuffled per-speaker/topic queues, topic round-robin within speaker, randomized speaker round-robin with shortage redistribution, shuffled final order",
+    "cluster_id": "Published speaker_id, not an invented dialogue ID",
+    "draw_frozen_before_inference": true
+  },
+  "initial_mixed_pool": 1034,
+  "text_eligible_count": 997,
+  "audio_candidates_found": 997,
+  "eligible_count": 900,
+  "excluded_count": 134,
+  "exclusion_counts": {
+    "not_mixed_after_tag_removal": 6,
+    "over_30_seconds": 97,
+    "unintelligible_or_privacy_masked_double_asterisk": 31
+  },
+  "selected_count": 450,
+  "eligible_not_selected_count": 450,
+  "manifest_sha256": "2f20ac100a0d876c4798a3976bc3e4d32cecc89839cbbaab7d3eb4fceb20eb30",
+  "pool_sha256": "b493287295d79924924fce1574c784118a7183aead2c9b14605f1233d09f9a32",
+  "selected_audio_bytes": 192485208,
+  "selected_duration_seconds": 6014.544,
+  "selected_duration_min_seconds": 2.095,
+  "selected_duration_max_seconds": 29.845,
+  "eligible_speaker_counts": {
+    "0017": 22,
+    "0018": 19,
+    "0031": 8,
+    "0032": 10,
+    "0033": 52,
+    "0034": 42,
+    "0043": 74,
+    "0044": 54,
+    "0065": 39,
+    "0066": 58,
+    "0073": 33,
+    "0074": 23,
+    "0077": 28,
+    "0078": 23,
+    "0089": 16,
+    "0090": 17,
+    "1005": 38,
+    "1006": 21,
+    "1019": 37,
+    "1020": 26,
+    "1069": 19,
+    "1070": 37,
+    "1073": 25,
+    "1074": 25,
+    "1085": 25,
+    "1086": 24,
+    "1093": 16,
+    "1094": 28,
+    "2001": 36,
+    "2002": 25
+  },
+  "selected_speaker_counts": {
+    "0017": 16,
+    "0018": 15,
+    "0031": 8,
+    "0032": 10,
+    "0033": 15,
+    "0034": 16,
+    "0043": 15,
+    "0044": 15,
+    "0065": 15,
+    "0066": 16,
+    "0073": 16,
+    "0074": 16,
+    "0077": 16,
+    "0078": 15,
+    "0089": 16,
+    "0090": 16,
+    "1005": 16,
+    "1006": 15,
+    "1019": 15,
+    "1020": 16,
+    "1069": 15,
+    "1070": 15,
+    "1073": 16,
+    "1074": 16,
+    "1085": 15,
+    "1086": 15,
+    "1093": 15,
+    "1094": 15,
+    "2001": 15,
+    "2002": 15
+  },
+  "eligible_topic_counts": {
+    "education": 155,
+    "entertainment": 233,
+    "job": 46,
+    "personal topics": 202,
+    "philosophy": 17,
+    "sports": 190,
+    "technology": 57
+  },
+  "selected_topic_counts": {
+    "education": 59,
+    "entertainment": 93,
+    "job": 29,
+    "personal topics": 123,
+    "philosophy": 10,
+    "sports": 103,
+    "technology": 33
+  },
+  "archives": [
+    {
+      "path": "data/short_wav/short_wav.tar.gz00",
+      "bytes": 524288000,
+      "sha256": "04a9746a326a956396a6c5c0d95fcb037019cd1105b8c8a6efb6aac0ee62892f"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz01",
+      "bytes": 524288000,
+      "sha256": "635036ae469aa4c5db2fd246bf4b304e4cdaa2d8d591c4d44fca88412c91fa79"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz02",
+      "bytes": 524288000,
+      "sha256": "8a39ff27bb57772c67bb914b7e7e704ac38efea27e576e6e6716108004b635ec"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz03",
+      "bytes": 524288000,
+      "sha256": "f27d3dfd856a6326560b258836f1979d2aa2ddf878fed52ca110f02383aad611"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz04",
+      "bytes": 524288000,
+      "sha256": "04dfc1595c5d047abf2388c0dbb4fd22b9dc18c8c271818e30f5eb7bf45e2c75"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz05",
+      "bytes": 524288000,
+      "sha256": "6a6d7872263641e062ca85508606c4df42b7e33878f6230b4552632795328dae"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz06",
+      "bytes": 524288000,
+      "sha256": "13715242be23677f6bcc015ada005e149b94aed0ca8b25572bd366352bdc1ce0"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz07",
+      "bytes": 524288000,
+      "sha256": "146387fc50cc7e8c109d1ae1889124e3b8592e9d3bc5014aa3c2293b27ab0196"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz08",
+      "bytes": 524288000,
+      "sha256": "a43f243d5d1b349e144ca0302e0b3fa97f47ad8a83aee959557c112fc62eb291"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz09",
+      "bytes": 524288000,
+      "sha256": "539ee88618965ee199d8ddc09918358135ec116fd3b02f7f0be9197d4a2046e7"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz10",
+      "bytes": 524288000,
+      "sha256": "e1b875b7daca74d7e5d91593b63c28823df759d34a80520bc3ac9ebcf188f6e6"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz11",
+      "bytes": 524288000,
+      "sha256": "8573628e7e82ec5d57a4793e286da628fd806692f590d6ee1978b6678d25f39a"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz12",
+      "bytes": 524288000,
+      "sha256": "25d9f8078c456a932261864294eb8ffe1678d2837fea4b4395ea97f8db980fd8"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz13",
+      "bytes": 524288000,
+      "sha256": "5750332a0a72cc052019a55ba2ce2e89fde6d8888faf1684d77204ca9e280fbd"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz14",
+      "bytes": 524288000,
+      "sha256": "45e54f3e3e8f2e941479f1b4bcd48b5e9df1404efd14b0f356db19284cd0336a"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz15",
+      "bytes": 524288000,
+      "sha256": "b19993429ca1b4ad213be3b47b6c57ca056a2b41d34230d4766372a82db7d792"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz16",
+      "bytes": 524288000,
+      "sha256": "513824444cd73f75c97229eb4f9dc618a88129ee7c968f1a64074c6545c0a206"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz17",
+      "bytes": 524288000,
+      "sha256": "3bf2a083446fc93c074383503ff6f1311757c13a364902db02d5f55c2ae3d18a"
+    },
+    {
+      "path": "data/short_wav/short_wav.tar.gz18",
+      "bytes": 158358742,
+      "sha256": "474878d5613965e39b72ae8dd41f33e48b970c3384a12f9c7a5282163720c0f0"
+    }
+  ],
+  "archive_members_checked": 39093,
+  "bandwidth": {
+    "measured_response_body_bytes": 9603599343,
+    "compressed_archive_bytes": 9595542742,
+    "measurement": "Preparation script HTTP response-body bytes including metadata/probes/retries; HTTP/TLS overhead and earlier source-investigation requests excluded",
+    "compressed_archives_retained_bytes": 0,
+    "long_audio_requested": false,
+    "strategy": "64-byte prefix probe of all parts, then sequential concatenated streaming; all parts consumed for full mixed-pool and gzip/LFS integrity validation"
+  },
+  "license": {
+    "label": "CC BY-NC-SA 4.0 plus source-card additional restrictions",
+    "source_card": "https://huggingface.co/datasets/BAAI/CS-Dialogue/resolve/a84770fcdf14072252373a0227321227eaac7dc7/README.md",
+    "access": "Publicly ungated, unauthenticated HTTP; no access forms or invented personal information",
+    "use": "Local noncommercial research only; no re-identification; honor withdrawals",
+    "distribution": "DO NOT redistribute CS audio/transcripts or include them in public delivery packages; research derivatives remain within research group absent written permission"
+  },
+  "limitations": [
+    "No human listening or model inference performed",
+    "Published speaker/topic only; no verified dialogue grouping",
+    "No claim of freedom from pretraining contamination or proven ASCEND waveform nonoverlap",
+    "Exact byte counts cover script response bodies, not transport overhead or earlier exploratory source queries"
+  ],
+  "prepared_at_utc": "2026-10-19T10:49:56Z",
+  "local_storage_bytes_before_audit": 201829101,
+  "verification": {
+    "selected": 450,
+    "speakers": 30,
+    "manifest_sha256": "2f20ac100a0d876c4798a3976bc3e4d32cecc89839cbbaab7d3eb4fceb20eb30",
+    "all_audio_hashes_and_full_decodes_verified": true
+  }
+}

@@ -1,0 +1,7 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.447 seconds.
+Prefix dict has been built successfully.
+cs_dialogue/A: 4/450
+cs_dialogue/B: 4/450
+cs_dialogue/C: 4/450

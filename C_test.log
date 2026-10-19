@@ -1,0 +1,18 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.385 seconds.
+Prefix dict has been built successfully.
+evaluate C/test: 100/1315 (26.5s this session)
+evaluate C/test: 200/1315 (57.8s this session)
+evaluate C/test: 300/1315 (90.4s this session)
+evaluate C/test: 401/1315 (119.2s this session)
+evaluate C/test: 501/1315 (142.4s this session)
+evaluate C/test: 601/1315 (162.9s this session)
+evaluate C/test: 701/1315 (185.3s this session)
+evaluate C/test: 801/1315 (208.6s this session)
+evaluate C/test: 901/1315 (233.7s this session)
+evaluate C/test: 1001/1315 (258.5s this session)
+evaluate C/test: 1102/1315 (280.5s this session)
+evaluate C/test: 1202/1315 (301.6s this session)
+evaluate C/test: 1302/1315 (326.6s this session)
+{"group": "C", "split": "test", "metrics": {"overall": {"metric": "MER", "percent": 16.00750085236959, "n": 1315, "substitutions": 1237, "deletions": 335, "insertions": 306, "reference_units": 11732, "collapse_percent": 0.0, "collapse_counts": {}}, "mixed": {"metric": "MER", "percent": 15.630614444843694, "n": 373, "substitutions": 562, "deletions": 151, "insertions": 157, "reference_units": 5566, "collapse_percent": 0.0, "collapse_counts": {}}, "zh": {"metric": "CER", "percent": 14.774849553849347, "n": 685, "substitutions": 507, "deletions": 102, "insertions": 103, "reference_units": 4819, "collapse_percent": 0.0, "collapse_counts": {}}, "en": {"metric": "WER", "percent": 24.061810154525386, "n": 257, "substitutions": 191, "deletions": 70, "insertions": 66, "reference_units": 1359, "collapse_percent": 0.0, "collapse_counts": {}}}}

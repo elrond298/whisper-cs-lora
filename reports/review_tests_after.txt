@@ -1,0 +1,52 @@
+test_cache_requires_matching_preparation_identity (test_pipeline.ArtifactGuardTests.test_cache_requires_matching_preparation_identity) ... ok
+test_cli_does_not_replace_explicit_zero_steps_with_full_budget (test_pipeline.ArtifactGuardTests.test_cli_does_not_replace_explicit_zero_steps_with_full_budget) ... ok
+test_completed_training_is_a_real_noop (test_pipeline.ArtifactGuardTests.test_completed_training_is_a_real_noop) ... B: checkpoint already at 800 steps; no files changed
+ok
+test_evaluate_rejects_changed_training_config_before_loading_or_writing (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_changed_training_config_before_loading_or_writing) ... ok
+test_evaluate_rejects_unbound_or_changed_existing_predictions (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_unbound_or_changed_existing_predictions) ... ok
+test_summary_accepts_complete_bound_predictions (test_pipeline.ArtifactGuardTests.test_summary_accepts_complete_bound_predictions) ... Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.758 seconds.
+Prefix dict has been built successfully.
+ok
+test_summary_rejects_stale_checkpoint_or_decoding_identity (test_pipeline.ArtifactGuardTests.test_summary_rejects_stale_checkpoint_or_decoding_identity) ... ok
+test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) ... ok
+test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) ... ok
+test_training_rejects_orphan_or_conflicting_completion_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_orphan_or_conflicting_completion_before_writes) ... ok
+test_verdict_respects_overall_threshold (test_pipeline.GenerationTests.test_verdict_respects_overall_threshold) ... ok
+test_whisper_generation_preserves_prefix (test_pipeline.GenerationTests.test_whisper_generation_preserves_prefix) ... `generation_config` default values have been modified to match model-specific defaults: {'suppress_tokens': [], 'begin_suppress_tokens': []}. If this is not desired, please set these values explicitly.
+A custom logits processor of type <class 'transformers.generation.logits_process.SuppressTokensLogitsProcessor'> has been passed to `.generate()`, but it was also created in `.generate()`, given its parameterization. The custom <class 'transformers.generation.logits_process.SuppressTokensLogitsProcessor'> will take precedence. Please check the docstring of <class 'transformers.generation.logits_process.SuppressTokensLogitsProcessor'> to see related `.generate()` flags.
+A custom logits processor of type <class 'transformers.generation.logits_process.SuppressTokensAtBeginLogitsProcessor'> has been passed to `.generate()`, but it was also created in `.generate()`, given its parameterization. The custom <class 'transformers.generation.logits_process.SuppressTokensAtBeginLogitsProcessor'> will take precedence. Please check the docstring of <class 'transformers.generation.logits_process.SuppressTokensAtBeginLogitsProcessor'> to see related `.generate()` flags.
+ok
+test_collapse (test_pipeline.PipelineTests.test_collapse) ... ok
+test_corpus_weighted_metric (test_pipeline.PipelineTests.test_corpus_weighted_metric) ... ok
+test_edit_denominator_and_empty (test_pipeline.PipelineTests.test_edit_denominator_and_empty) ... ok
+test_mixed_tokenizer (test_pipeline.PipelineTests.test_mixed_tokenizer) ... ok
+test_sampling_distribution_and_reproducibility (test_pipeline.PipelineTests.test_sampling_distribution_and_reproducibility) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 1.080s
+
+OK
+{
+  "C_minus_B_percentage_points": {
+    "overall": 0.0,
+    "mixed": 0.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": true,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "official_test_identity_pass": true,
+  "prediction_checkpoint_identity_pass": true,
+  "all_hard_gates_pass": true
+}
+<!-- ripwire edit-check schema=ripwire.edit-check/v1: sym='s contract NOW vs HEAD: status=unchanged|new-symbol|contract-change; <c n= p= incompatible=1 sites_l=> callers. counts_floor=1: every count is a FLOOR, never a total. graph_ambiguous=/graph_unresolved=: resolver gauge. graph_unindexed=N: N files no grammar could read (the map header's unindexed=); their calls raise neither gauge. est_tokens=: price as emitted (an upper bound under compact). root=: p= relative to it. next=: the one pasteable follow-up. defs=N: overloads at this site (same file, scope, name) folded into one contract; params compared by MAX. callers=N: callers of sym= (the c rows' total; a floor). --><edit-check schema="ripwire.edit-check/v1" sym="load_training_state" t="fn" p="asr.py:229" status="no-baseline" defs="1" callers="2" incompatible="0" graph_ambiguous="0" graph_unresolved="3" graph_unindexed="18" counts_floor="1" root="." next="--test-gate=asr.py" est_tokens="443"><c n="train" p="asr.py:260"/><c n="test_training_rejects_orphan_or_conflicting_completion_before_writes" p="test_pipeline.py:205"/></edit-check><!-- ripwire quality-delta schema=ripwire.quality-delta/v1: only what the change made WORSE vs baseline=: regressions= minor= gating=; <r kind= sym= p= was= now= gating= bar=>, <sa> acked. stale=N: ack ledger rows whose target no longer applies (sa rows); never gating. preexisting-worse=N: regressions on symbols that existed at baseline; only these gate (when major). new-symbol=N: regressions on NEW code; never gate, but the debt is yours: read them. register-macro-excluded=N: symbols kept out of dead-code as self-registering test/bench macros; a floor. api-new-surface=N: new PUBLIC symbols; a count, never gates, not in regressions=. acked=N: findings suppressed by the ack ledger, listed as sa rows; never gating. r sev=minor: a small numeric delta, counted in minor=, never gating (absent: major). r origin=new-symbol: the finding is on NEW code, never gating (absent: preexisting-worse). --><quality-delta schema="ripwire.quality-delta/v1" baseline="sidecar" regressions="20" minor="4" acked="0" stale="0" preexisting-worse="4" new-symbol="16" gating="0" register-macro-excluded="0" api-new-surface="0"><r kind="complexity" sym="evaluate" was="27" now="28" bar="15" sev="minor" p="asr.py:345"/><r kind="complexity" sym="load_training_state" was="0" now="21" bar="15" origin="new-symbol" p="asr.py:229"/><r kind="complexity" sym="prepare" was="35" now="38" bar="15" sev="minor" p="asr.py:102"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::setUp" origin="new-symbol" p="test_pipeline.py:60"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_cache_requires_matching_preparation_identity" origin="new-symbol" p="test_pipeline.py:169"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_cli_does_not_replace_explicit_zero_steps_with_full_budget" origin="new-symbol" p="test_pipeline.py:232"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_completed_training_is_a_real_noop" origin="new-symbol" p="test_pipeline.py:223"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_evaluate_rejects_changed_training_config_before_loading_or_writing" origin="new-symbol" p="test_pipeline.py:141"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_evaluate_rejects_unbound_or_changed_existing_predictions" origin="new-symbol" p="test_pipeline.py:151"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_summary_accepts_complete_bound_predictions" origin="new-symbol" p="test_pipeline.py:113"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_summary_rejects_stale_checkpoint_or_decoding_identity" origin="new-symbol" p="test_pipeline.py:130"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_summary_rejects_wrong_ids_references_and_languages_before_writes" origin="new-symbol" p="test_pipeline.py:118"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_training_rejects_invalid_targets_before_writes" origin="new-symbol" p="test_pipeline.py:194"/><r kind="dead-code" sym="test_pipeline.py::ArtifactGuardTests::test_training_rejects_orphan_or_conflicting_completion_before_writes" origin="new-symbol" p="test_pipeline.py:205"/><r kind="dead-code" sym="test_pipeline.py::GenerationTests::test_verdict_respects_overall_threshold" origin="new-symbol" p="test_pipeline.py:262"/><r kind="dead-code" sym="test_pipeline.py::GenerationTests::test_whisper_generation_preserves_prefix" origin="new-symbol" p="test_pipeline.py:240"/><r kind="verbosity" sym="test_pipeline.py::ArtifactGuardTests::ArtifactGuardTests" was="0" now="166" bar="60" origin="new-symbol" p="test_pipeline.py:59"/><r kind="verbosity" sym="evaluate" was="72" now="73" bar="60" sev="minor" p="asr.py:345"/><r kind="verbosity" sym="prepare" was="65" now="69" bar="60" sev="minor" p="asr.py:102"/><r kind="verbosity" sym="records" was="0" now="387" bar="60" origin="new-symbol" p="reports/error_analysis_40.json:20"/></quality-delta>

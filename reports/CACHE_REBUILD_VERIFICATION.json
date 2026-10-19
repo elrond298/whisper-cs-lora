@@ -1,0 +1,18 @@
+{
+  "cache_files_compared": 9,
+  "all_features_manifests_and_mismatch_lists_byte_identical": true,
+  "new_preparation_identity_verified": true,
+  "original_audit_fields_unchanged": true,
+  "sha256": {
+    "train/features.npy": "7a779b636907c7a6f7aad6fcc7a987b48dedb467dea1d3840d3ce008c4cf09d1",
+    "train/manifest.json": "46b4d8a1fc291c453607f82c840a96517f7c51fd964b473eab956b4c1ea50e10",
+    "train/language_mismatches.json": "25396b62d5ab98a0c917ce6e47e7afa9e757b5cfee6d1d4bdf8f4969f4774114",
+    "validation/features.npy": "905e6f1a5f89b91c9135ceef0b424ce4bcefb83c4c3cbfc22b001e4f398eea5c",
+    "validation/manifest.json": "fbb186378343ab9ebb7fb203fe1970676e344dda5922bf810979af240ee748f2",
+    "validation/language_mismatches.json": "143859623b74cc8e662ae1b22c87f7cf1581d1f975424d8eb0b7af992cde3015",
+    "test/features.npy": "4a24c4b32a9334f950b6dfd657382bc8b503d0a0befe0be74ba4a988834a68a6",
+    "test/manifest.json": "ecd50adba5835338920370dbe24d75fad1d539181539ddb50dcf019b87478471",
+    "test/language_mismatches.json": "8dd27e2d232c507bd02c9e0412841dcc48a49c743db2a325e52b876553922d35"
+  },
+  "original_artifacts_verified_unchanged_before_rebuild": 54
+}

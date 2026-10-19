@@ -1,0 +1,46 @@
+test_training_rejects_orphan_or_conflicting_completion_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_orphan_or_conflicting_completion_before_writes) ... 
+  test_training_rejects_orphan_or_conflicting_completion_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_orphan_or_conflicting_completion_before_writes) (checkpoint_step=None) ... FAIL
+  test_training_rejects_orphan_or_conflicting_completion_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_orphan_or_conflicting_completion_before_writes) (checkpoint_step=400) ... FAIL
+
+======================================================================
+FAIL: test_training_rejects_orphan_or_conflicting_completion_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_orphan_or_conflicting_completion_before_writes) (checkpoint_step=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 216, in test_training_rejects_orphan_or_conflicting_completion_before_writes
+    asr.train("B", 800, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 263, in train
+    if not torch.cuda.is_available():
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: reached GPU
+
+======================================================================
+FAIL: test_training_rejects_orphan_or_conflicting_completion_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_orphan_or_conflicting_completion_before_writes) (checkpoint_step=400)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 216, in test_training_rejects_orphan_or_conflicting_completion_before_writes
+    asr.train("B", 800, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 263, in train
+    if not torch.cuda.is_available():
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: reached GPU
+
+----------------------------------------------------------------------
+Ran 1 test in 0.020s
+
+FAILED (failures=2)

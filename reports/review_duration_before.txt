@@ -1,0 +1,40 @@
+test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) ... Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.860 seconds.
+Prefix dict has been built successfully.
+
+  test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='duration', value=999.0) ... FAIL
+
+======================================================================
+FAIL: test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='duration', value=999.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 126, in test_summary_rejects_wrong_ids_references_and_languages_before_writes
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.914s
+
+FAILED (failures=1)
+{
+  "C_minus_B_percentage_points": {
+    "overall": 0.0,
+    "mixed": 0.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": true,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "official_test_identity_pass": true,
+  "prediction_checkpoint_identity_pass": true,
+  "all_hard_gates_pass": true
+}

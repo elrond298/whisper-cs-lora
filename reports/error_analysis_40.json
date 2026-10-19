@@ -1,0 +1,407 @@
+{
+  "reviewer": "AI text-only review; not human listening annotation",
+  "selection": "40 C mixed test predictions, fixed Random(42), source artifacts/error_review_40.json",
+  "size": 40,
+  "multi_label": true,
+  "category_counts": {
+    "英文词替换/拼写": 12,
+    "英文词边界/分词": 6,
+    "中文被英文替代": 3,
+    "含UNK不确定": 4,
+    "正确": 12,
+    "中文词字错误": 16,
+    "切换邻近冗字": 1,
+    "英文被中文替代": 2,
+    "语气词差异": 6,
+    "英文增词": 1,
+    "地名中文化（疑似翻译）": 1,
+    "否定含义错误": 1
+  },
+  "records": [
+    {
+      "id": 1134,
+      "reference": "我觉得python可能会用到一些 [UNK] neuralnetwork还有deep learning的东西",
+      "prediction": "you python可能会用到一些near narrow new row network还有 deep learning的东西",
+      "categories": [
+        "英文词替换/拼写",
+        "英文词边界/分词",
+        "中文被英文替代",
+        "含UNK不确定"
+      ],
+      "note": "我觉得→you；neuralnetwork→near narrow new row network。参考含[UNK]，不能把相邻全部英文增词都断定为幻觉。"
+    },
+    {
+      "id": 291,
+      "reference": "太expensive",
+      "prediction": "太expensive",
+      "categories": [
+        "正确"
+      ],
+      "note": "太expensive 与参考一致。"
+    },
+    {
+      "id": 150,
+      "reference": "想过但是因为最近project有点多",
+      "prediction": "想过但是因为这次project有点多",
+      "categories": [
+        "中文词字错误"
+      ],
+      "note": "最近→这次；project 保留。"
+    },
+    {
+      "id": 494,
+      "reference": "所以你平时就现在大部分时间还是tennis就打网球",
+      "prediction": "所以你平时就现在大部分时间还是tenness就打王球",
+      "categories": [
+        "英文词替换/拼写",
+        "中文词字错误"
+      ],
+      "note": "tennis→tenness，网球→王球。"
+    },
+    {
+      "id": 425,
+      "reference": "然后在打算申请graduate school的时候我考虑过挺多major的",
+      "prediction": "然后在打算申请graduate school的时候我考虑过挺多major的",
+      "categories": [
+        "正确"
+      ],
+      "note": "graduate school、major 和中文片段均保留。"
+    },
+    {
+      "id": 404,
+      "reference": "对那我当初其实是我本科是e background",
+      "prediction": "那我当初其实是我本科是e background",
+      "categories": [
+        "中文词字错误"
+      ],
+      "note": "句首对漏识别；e background 保留。"
+    },
+    {
+      "id": 325,
+      "reference": "一开始的学习过程还是挺tough",
+      "prediction": "一开始的学习过程还是挺tough的",
+      "categories": [
+        "中文词字错误",
+        "切换邻近冗字"
+      ],
+      "note": "tough 后额外生成的；不是可由当前文本确认的断句问题。"
+    },
+    {
+      "id": 276,
+      "reference": "我我自己是之前的这边exchange就是我在这边当exchange students",
+      "prediction": "我我自己是之前在这边exchange就是我在这边当exchange student",
+      "categories": [
+        "英文词替换/拼写",
+        "中文词字错误"
+      ],
+      "note": "exchange students→exchange student，复数丢失；之前的这边→之前在这边。"
+    },
+    {
+      "id": 1199,
+      "reference": "我当时学privacy的时候也是觉得",
+      "prediction": "我当时学private school的时候也是觉得",
+      "categories": [
+        "英文词替换/拼写",
+        "英文词边界/分词"
+      ],
+      "note": "privacy→private school，单词被替换为近形短语。"
+    },
+    {
+      "id": 1035,
+      "reference": "但是如果你就是单纯的sell这个technology就是说告诉他就是我的我self driving这个方向是perfect",
+      "prediction": "但是如果你就是单纯的sell这个technology就是说告诉他就是我的我self driving这个function是perfect",
+      "categories": [
+        "中文词字错误",
+        "中文被英文替代"
+      ],
+      "note": "方向→function；self driving、technology、perfect 保留。"
+    },
+    {
+      "id": 256,
+      "reference": "就是会带我们组织一些activity",
+      "prediction": "就是会带我们组织一些activity",
+      "categories": [
+        "正确"
+      ],
+      "note": "activity 及中文上下文一致。"
+    },
+    {
+      "id": 1076,
+      "reference": "close [UNK] 嗯很多my friends in my generation",
+      "prediction": "those keep很多my friends in my generation",
+      "categories": [
+        "英文词替换/拼写",
+        "中文词字错误",
+        "含UNK不确定"
+      ],
+      "note": "close→those，嗯漏掉；keep 对应[UNK]附近，无法只凭参考判其声学来源。"
+    },
+    {
+      "id": 876,
+      "reference": "学生没有那种就是self awareness",
+      "prediction": "学生没有那种就是self awareness",
+      "categories": [
+        "正确"
+      ],
+      "note": "self awareness 保留。"
+    },
+    {
+      "id": 188,
+      "reference": "深圳啊或者是上海这种比较大的城市会有更多opportunity",
+      "prediction": "深圳或者是上海这种表达城市会有更多的不经常",
+      "categories": [
+        "中文词字错误",
+        "英文被中文替代"
+      ],
+      "note": "opportunity 消失，尾部变成不经常；比较大→表达。不是可确认的语义翻译，音近来源也未听音确认。"
+    },
+    {
+      "id": 161,
+      "reference": "uh呃",
+      "prediction": "so呃",
+      "categories": [
+        "语气词差异"
+      ],
+      "note": "uh→so；极短语气词混合句，不能代表实质内容词切换。"
+    },
+    {
+      "id": 264,
+      "reference": "所以你还蛮喜欢也蛮习惯Hong Kong life嘛就是",
+      "prediction": "所以你还蛮喜欢也蛮习惯fongkong life什么就是",
+      "categories": [
+        "英文词替换/拼写",
+        "英文词边界/分词",
+        "中文词字错误"
+      ],
+      "note": "Hong Kong→fongkong；life 保留；嘛→什么。"
+    },
+    {
+      "id": 401,
+      "reference": "我要去这个university做交换",
+      "prediction": "我要去这个university做交换",
+      "categories": [
+        "正确"
+      ],
+      "note": "university 与中文上下文一致。"
+    },
+    {
+      "id": 414,
+      "reference": "但是我的supervisor就跟我说也不是supervisor就是我的呃",
+      "prediction": "那时候我的supervisor就跟我说也不是supervisor那时候我的呃",
+      "categories": [
+        "中文词字错误"
+      ],
+      "note": "两个但是/就是附近片段变成那时候；两个supervisor都保留。"
+    },
+    {
+      "id": 999,
+      "reference": "就是hard choice",
+      "prediction": "就是hard choice",
+      "categories": [
+        "正确"
+      ],
+      "note": "就是hard choice 一致。"
+    },
+    {
+      "id": 1094,
+      "reference": "so you will walk slowly and slowly and then you you you should呃",
+      "prediction": "so it will work slowly and slowly and then you you you should呃",
+      "categories": [
+        "英文词替换/拼写"
+      ],
+      "note": "you→it，walk→work；末尾呃保留。"
+    },
+    {
+      "id": 151,
+      "reference": "六月一号两门final吗",
+      "prediction": "六月一号我的两门final嘛",
+      "categories": [
+        "中文词字错误",
+        "语气词差异"
+      ],
+      "note": "额外生成我的，吗→嘛；final 保留。"
+    },
+    {
+      "id": 1047,
+      "reference": "第二个呢它的测试也很很复杂就是说你在测试的时候你只能simulate这个scenario",
+      "prediction": "第二个呢它的测试也很很复杂就是说你在测试的时候你只能simulate这个scenario",
+      "categories": [
+        "正确"
+      ],
+      "note": "simulate、scenario 及中文片段一致。"
+    },
+    {
+      "id": 388,
+      "reference": "not what I expected in the beginning but just对最后就回到这里",
+      "prediction": "it's not what I expected in the beginning but just对最后就回到这里",
+      "categories": [
+        "英文增词"
+      ],
+      "note": "句首多出it's；原参考为not what I expected...。"
+    },
+    {
+      "id": 1284,
+      "reference": "mobile phone number还有你的嗯",
+      "prediction": "mobile phone number还有你的嗯",
+      "categories": [
+        "正确"
+      ],
+      "note": "mobile phone number 及中文片段一致。"
+    },
+    {
+      "id": 1145,
+      "reference": "哦stock吗对有",
+      "prediction": "oh stock吗对有",
+      "categories": [
+        "语气词差异"
+      ],
+      "note": "哦→oh，发音/语义可能近似，但冻结计分不做跨文字语气词归一化。"
+    },
+    {
+      "id": 1259,
+      "reference": "credit card或者是octopus card这种东西",
+      "prediction": "credit card或者是octobus card这种东西",
+      "categories": [
+        "英文词替换/拼写"
+      ],
+      "note": "octopus→octobus；credit card 保留。"
+    },
+    {
+      "id": 863,
+      "reference": "校服上面没有学校的logo吗",
+      "prediction": "校服上面没有学校的logo吗",
+      "categories": [
+        "正确"
+      ],
+      "note": "logo 及中文片段一致。"
+    },
+    {
+      "id": 402,
+      "reference": "所以但是跟那这跟major没关系的你说的major可能是哦我接下来要apply到graduate school的时候我要往computer science和往electric engineering",
+      "prediction": "所以但是跟这个major没关系的你说的major可能是哦我接下来要apply到credible school的时候我要往tablet of science或者往electric engineering",
+      "categories": [
+        "英文词替换/拼写",
+        "英文词边界/分词",
+        "中文词字错误"
+      ],
+      "note": "graduate school→credible school，computer science→tablet of science，另有中文替换。"
+    },
+    {
+      "id": 937,
+      "reference": "嗯这边的schedule每天都排的很满然后很紧",
+      "prediction": "嗯这边的schedule每天都拍得很慢然后很紧",
+      "categories": [
+        "中文词字错误"
+      ],
+      "note": "排的很满→拍得很慢，存在近音字误识别；schedule 保留。"
+    },
+    {
+      "id": 1071,
+      "reference": "就是 [UNK] surfing the internet",
+      "prediction": "就是给开server in the internet",
+      "categories": [
+        "英文词替换/拼写",
+        "英文词边界/分词",
+        "含UNK不确定"
+      ],
+      "note": "surfing the internet→server in the internet；给开 位于[UNK]附近，无法直接判其来源。"
+    },
+    {
+      "id": 554,
+      "reference": "嗯所以你平时会看Olympic games吗过去的几届",
+      "prediction": "嗯所以你平时会看olympic games吗过去的季节",
+      "categories": [
+        "中文词字错误"
+      ],
+      "note": "几届→季节；Olympic games 的大小写差异不计错。"
+    },
+    {
+      "id": 55,
+      "reference": "um运动啊男生一般不都喜欢运动",
+      "prediction": "嗯运动啊男生一般不都喜欢运动",
+      "categories": [
+        "语气词差异"
+      ],
+      "note": "um→嗯；按官方标签保留为mixed，但实质是语气词的跨文字标注差异。"
+    },
+    {
+      "id": 346,
+      "reference": "去念研究所那为什么选择来Hong Kong",
+      "prediction": "去念你就拿卫生学的来香港",
+      "categories": [
+        "中文词字错误",
+        "地名中文化（疑似翻译）"
+      ],
+      "note": "Hong Kong→香港，参考中的英文地名被中文化；前段中文同时严重误识别，不能据此断言整句被翻译。未做听音确认。"
+    },
+    {
+      "id": 1254,
+      "reference": "香港他们很注重privacy的问题",
+      "prediction": "香港他们很注重privacy的问题",
+      "categories": [
+        "正确"
+      ],
+      "note": "privacy 及中文片段一致。"
+    },
+    {
+      "id": 681,
+      "reference": "比较容易学的是swim",
+      "prediction": "比较容易学的是swim",
+      "categories": [
+        "正确"
+      ],
+      "note": "swim 及中文片段一致。"
+    },
+    {
+      "id": 342,
+      "reference": "如果现在有一个呃问题问一下就是why why did you come to Hong Kong",
+      "prediction": "如果现在有一个呃问题问一下就是why why did you come to hong kong",
+      "categories": [
+        "正确"
+      ],
+      "note": "Hong Kong→hong kong 仅大小写变化，规范化后完全一致。"
+    },
+    {
+      "id": 400,
+      "reference": "就你要申请去交换你并不需要去说哦我要去哪一个department交换是直接选school",
+      "prediction": "就你要升起去交换你必须要去说哦我要去哪一个department交换是situation school",
+      "categories": [
+        "中文词字错误",
+        "中文被英文替代",
+        "否定含义错误"
+      ],
+      "note": "申请→升起，并不需要→必须要，否定含义改变；直接选→situation。department、school 保留。"
+    },
+    {
+      "id": 677,
+      "reference": "badminton是一个比较好学的就是说",
+      "prediction": "Bankman腾是一个比较好学的就是说",
+      "categories": [
+        "英文词替换/拼写",
+        "英文被中文替代"
+      ],
+      "note": "badminton→Bankman腾，部分英文被中文音近字替代的疑似案例；没有听音，不能确认声学原因。"
+    },
+    {
+      "id": 719,
+      "reference": "对然后当时that's the reason I know the [UNK] um the famous player McGrady",
+      "prediction": "对然后当时that's the reason i know themigrate呃the famous player migratie",
+      "categories": [
+        "英文词替换/拼写",
+        "英文词边界/分词",
+        "语气词差异",
+        "含UNK不确定"
+      ],
+      "note": "McGrady→migratie，专名拼写/边界错误；um→呃。[UNK]附近的themigrate无法逐词可靠判定。"
+    },
+    {
+      "id": 267,
+      "reference": "啊lifestyle啊之类的",
+      "prediction": "呃lifestyle啊之类的",
+      "categories": [
+        "语气词差异"
+      ],
+      "note": "首个啊→呃；lifestyle 保留。"
+    }
+  ]
+}

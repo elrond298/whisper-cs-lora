@@ -1,0 +1,28 @@
+{
+  "source": "CAiRE/ASCEND",
+  "revision": "737e9800ae31be9932ba8464c80366559bd28424",
+  "source_split_counts": {
+    "train": 9869,
+    "test": 1315,
+    "validation": 1130
+  },
+  "canonicalization": "16kHz mono decoded waveform, rounded/clipped signed16 PCM, sample-count bound SHA256",
+  "caveat": "No exact decoded-waveform match does not exclude edited/resampled near-duplicates or base-model pretraining exposure",
+  "subsets": {
+    "cs_dialogue": {
+      "n": 450,
+      "matches": [],
+      "manifest_sha256": "2f20ac100a0d876c4798a3976bc3e4d32cecc89839cbbaab7d3eb4fceb20eb30"
+    },
+    "fleurs_zh": {
+      "n": 300,
+      "matches": [],
+      "manifest_sha256": "81a8a21d820ed39d5896ee3417884c38787a0eea36a20730e7e906e81d51c5f9"
+    },
+    "fleurs_en": {
+      "n": 300,
+      "matches": [],
+      "manifest_sha256": "d1a9d91cf389b1c8bf4a192d55424edaa45184d6a8ff23d64dae7c5dd63e62df"
+    }
+  }
+}

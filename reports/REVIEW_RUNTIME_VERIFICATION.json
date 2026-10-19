@@ -1,0 +1,31 @@
+{
+  "unit_tests_passed": 17,
+  "duration_counterexample_fixed": true,
+  "orphan_or_conflicting_completion_rejected_before_GPU_or_writes": true,
+  "cache_verification": "CACHE_REBUILD_VERIFICATION.json",
+  "completed_BC_real_reruns_are_noops": true,
+  "official_manifest_ID_reference_language_duration_exact": {"test_groups": ["A", "B", "C"], "test_examples_each": 1315, "validation_groups": ["B", "C"], "validation_examples_each": 1130},
+  "fresh_generation": [
+    {
+      "group": "A",
+      "subset": "first 4 per language; same batch size 4 as formal evaluation",
+      "fresh_predictions": 12,
+      "prediction_tokens_flags_and_example_identity_exact": true
+    },
+    {
+      "group": "B",
+      "subset": "first 4 per language; same batch size 4 as formal evaluation",
+      "fresh_predictions": 12,
+      "prediction_tokens_flags_and_example_identity_exact": true
+    },
+    {
+      "group": "C",
+      "subset": "first 4 per language; same batch size 4 as formal evaluation",
+      "fresh_predictions": 12,
+      "prediction_tokens_flags_and_example_identity_exact": true
+    }
+  ],
+  "original_artifacts_unchanged": 54,
+  "original_checkpoint_and_predictions_replaced": false,
+  "training_restarted": false
+}

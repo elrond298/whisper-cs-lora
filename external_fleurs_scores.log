@@ -1,0 +1,148 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.375 seconds.
+Prefix dict has been built successfully.
+{
+  "dataset": "fleurs_zh",
+  "metric": "CER",
+  "n": 300,
+  "clusters": 286,
+  "duration_seconds": 3454.7599999999993,
+  "manifest_sha256": "81a8a21d820ed39d5896ee3417884c38787a0eea36a20730e7e906e81d51c5f9",
+  "scoring_policy": "Whisper BasicTextNormalizer; remove whitespace; character edits; no traditional/simplified conversion or number expansion",
+  "scoring_code_sha256": "d51f9ed0d6df969ace62d76a953b80c44f80b7d7b12bff76a34b791a2de36056",
+  "metric_dependency_sha256": "4122a1b220a4f36e4adb4bc31094c775fe3ca7c9109e7d86d8ab602e346f3fd3",
+  "bootstrap_policy": "2000 paired cluster draws, percentile 95% CI, seed42; speaker clusters for CS, sentence-ID clusters for FLEURS",
+  "metrics": {
+    "A": {
+      "substitutions": 1927,
+      "deletions": 52,
+      "insertions": 64,
+      "reference_units": 10700,
+      "errors": 2043,
+      "percent": 19.093457943925234,
+      "n": 300,
+      "collapse_percent": 0.0
+    },
+    "B": {
+      "substitutions": 988,
+      "deletions": 43,
+      "insertions": 113,
+      "reference_units": 10700,
+      "errors": 1144,
+      "percent": 10.69158878504673,
+      "n": 300,
+      "collapse_percent": 0.0
+    },
+    "C": {
+      "substitutions": 1010,
+      "deletions": 41,
+      "insertions": 124,
+      "reference_units": 10700,
+      "errors": 1175,
+      "percent": 10.981308411214954,
+      "n": 300,
+      "collapse_percent": 0.0
+    }
+  },
+  "comparisons": {
+    "B_minus_A": {
+      "delta_pp": -8.401869158878505,
+      "ci95_pp": [
+        -10.255666114204477,
+        -6.668550042115669
+      ],
+      "tolerance_pp": 0.5,
+      "verdict": "supports_within_tolerance"
+    },
+    "C_minus_A": {
+      "delta_pp": -8.11214953271028,
+      "ci95_pp": [
+        -9.966151036309645,
+        -6.386943274800078
+      ],
+      "tolerance_pp": 0.5,
+      "verdict": "supports_within_tolerance"
+    },
+    "C_minus_B": {
+      "delta_pp": 0.28971962616822466,
+      "ci95_pp": [
+        0.017300432491871798,
+        0.5960329636894481
+      ]
+    }
+  },
+  "caveat": "Fixed-model subset estimates only, not training-seed uncertainty; CS speaker IDs are not verified dialogue IDs; FLEURS sentence clusters do not account for unavailable speaker IDs."
+}
+{
+  "dataset": "fleurs_en",
+  "metric": "WER",
+  "n": 300,
+  "clusters": 300,
+  "duration_seconds": 3009.8799999999997,
+  "manifest_sha256": "d1a9d91cf389b1c8bf4a192d55424edaa45184d6a8ff23d64dae7c5dd63e62df",
+  "scoring_policy": "Whisper EnglishTextNormalizer with empty spelling-alias map; whitespace word edits; normalize references and hypotheses symmetrically",
+  "scoring_code_sha256": "d51f9ed0d6df969ace62d76a953b80c44f80b7d7b12bff76a34b791a2de36056",
+  "metric_dependency_sha256": "4122a1b220a4f36e4adb4bc31094c775fe3ca7c9109e7d86d8ab602e346f3fd3",
+  "bootstrap_policy": "2000 paired cluster draws, percentile 95% CI, seed42; speaker clusters for CS, sentence-ID clusters for FLEURS",
+  "metrics": {
+    "A": {
+      "substitutions": 316,
+      "deletions": 69,
+      "insertions": 77,
+      "reference_units": 6781,
+      "errors": 462,
+      "percent": 6.813154402005604,
+      "n": 300,
+      "collapse_percent": 0.0
+    },
+    "B": {
+      "substitutions": 367,
+      "deletions": 65,
+      "insertions": 101,
+      "reference_units": 6781,
+      "errors": 533,
+      "percent": 7.8601976109718334,
+      "n": 300,
+      "collapse_percent": 0.0
+    },
+    "C": {
+      "substitutions": 359,
+      "deletions": 65,
+      "insertions": 100,
+      "reference_units": 6781,
+      "errors": 524,
+      "percent": 7.727473823919776,
+      "n": 300,
+      "collapse_percent": 0.0
+    }
+  },
+  "comparisons": {
+    "B_minus_A": {
+      "delta_pp": 1.0470432089662296,
+      "ci95_pp": [
+        0.3002673604212584,
+        1.7683626969033683
+      ],
+      "tolerance_pp": 0.8,
+      "verdict": "inconclusive"
+    },
+    "C_minus_A": {
+      "delta_pp": 0.9143194219141719,
+      "ci95_pp": [
+        0.16163654355388743,
+        1.6502174713415516
+      ],
+      "tolerance_pp": 0.8,
+      "verdict": "inconclusive"
+    },
+    "C_minus_B": {
+      "delta_pp": -0.13272378705205767,
+      "ci95_pp": [
+        -0.38594423391648075,
+        0.1446231208258052
+      ]
+    }
+  },
+  "caveat": "Fixed-model subset estimates only, not training-seed uncertainty; CS speaker IDs are not verified dialogue IDs; FLEURS sentence clusters do not account for unavailable speaker IDs."
+}

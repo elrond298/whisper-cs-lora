@@ -1,0 +1,43 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.347 seconds.
+Prefix dict has been built successfully.
+cs_dialogue/A: 14/450
+cs_dialogue/A: 42/450
+cs_dialogue/A: 82/450
+cs_dialogue/A: 122/450
+cs_dialogue/A: 162/450
+cs_dialogue/A: 202/450
+cs_dialogue/A: 242/450
+cs_dialogue/A: 282/450
+cs_dialogue/A: 322/450
+cs_dialogue/A: 362/450
+cs_dialogue/A: 402/450
+cs_dialogue/A: 442/450
+cs_dialogue/A: 450/450
+cs_dialogue/B: 14/450
+cs_dialogue/B: 42/450
+cs_dialogue/B: 82/450
+cs_dialogue/B: 122/450
+cs_dialogue/B: 162/450
+cs_dialogue/B: 202/450
+cs_dialogue/B: 242/450
+cs_dialogue/B: 282/450
+cs_dialogue/B: 322/450
+cs_dialogue/B: 362/450
+cs_dialogue/B: 402/450
+cs_dialogue/B: 442/450
+cs_dialogue/B: 450/450
+cs_dialogue/C: 14/450
+cs_dialogue/C: 42/450
+cs_dialogue/C: 82/450
+cs_dialogue/C: 122/450
+cs_dialogue/C: 162/450
+cs_dialogue/C: 202/450
+cs_dialogue/C: 242/450
+cs_dialogue/C: 282/450
+cs_dialogue/C: 322/450
+cs_dialogue/C: 362/450
+cs_dialogue/C: 402/450
+cs_dialogue/C: 442/450
+cs_dialogue/C: 450/450

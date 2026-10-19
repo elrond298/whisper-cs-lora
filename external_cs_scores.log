@@ -1,0 +1,73 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.401 seconds.
+Prefix dict has been built successfully.
+{
+  "dataset": "cs_dialogue",
+  "metric": "MER",
+  "n": 450,
+  "clusters": 30,
+  "duration_seconds": 6014.544,
+  "manifest_sha256": "2f20ac100a0d876c4798a3976bc3e4d32cecc89839cbbaab7d3eb4fceb20eb30",
+  "scoring_policy": "Frozen ASCEND author-compatible jieba MER; no changes to original scorer",
+  "scoring_code_sha256": "d51f9ed0d6df969ace62d76a953b80c44f80b7d7b12bff76a34b791a2de36056",
+  "metric_dependency_sha256": "4122a1b220a4f36e4adb4bc31094c775fe3ca7c9109e7d86d8ab602e346f3fd3",
+  "bootstrap_policy": "2000 paired cluster draws, percentile 95% CI, seed42; speaker clusters for CS, sentence-ID clusters for FLEURS",
+  "metrics": {
+    "A": {
+      "substitutions": 2672,
+      "deletions": 1756,
+      "insertions": 420,
+      "reference_units": 18517,
+      "errors": 4848,
+      "percent": 26.181346870443377,
+      "n": 450,
+      "collapse_percent": 0.6666666666666666
+    },
+    "B": {
+      "substitutions": 1268,
+      "deletions": 339,
+      "insertions": 666,
+      "reference_units": 18517,
+      "errors": 2273,
+      "percent": 12.27520656693849,
+      "n": 450,
+      "collapse_percent": 0.4444444444444444
+    },
+    "C": {
+      "substitutions": 1250,
+      "deletions": 274,
+      "insertions": 926,
+      "reference_units": 18517,
+      "errors": 2450,
+      "percent": 13.231084948965815,
+      "n": 450,
+      "collapse_percent": 0.6666666666666666
+    }
+  },
+  "comparisons": {
+    "B_minus_A": {
+      "delta_pp": -13.906140303504888,
+      "ci95_pp": [
+        -17.515131186556058,
+        -10.69617125630915
+      ]
+    },
+    "C_minus_A": {
+      "delta_pp": -12.950261921477562,
+      "ci95_pp": [
+        -16.62937371208141,
+        -9.51649236369587
+      ]
+    },
+    "C_minus_B": {
+      "delta_pp": 0.9558783820273256,
+      "ci95_pp": [
+        -0.47972472801231464,
+        3.7811553783295677
+      ],
+      "verdict": "no_observed_improvement"
+    }
+  },
+  "caveat": "Fixed-model subset estimates only, not training-seed uncertainty; CS speaker IDs are not verified dialogue IDs; FLEURS sentence clusters do not account for unavailable speaker IDs."
+}

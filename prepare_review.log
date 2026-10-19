@@ -1,0 +1,26 @@
+prepare train 500/9869
+prepare train 1000/9869
+prepare train 1500/9869
+prepare train 2000/9869
+prepare train 2500/9869
+prepare train 3000/9869
+prepare train 3500/9869
+prepare train 4000/9869
+prepare train 4500/9869
+prepare train 5000/9869
+prepare train 5500/9869
+prepare train 6000/9869
+prepare train 6500/9869
+prepare train 7000/9869
+prepare train 7500/9869
+prepare train 8000/9869
+prepare train 8500/9869
+prepare train 9000/9869
+prepare train 9500/9869
+{"n": 9869, "counts": {"mixed": 2739, "zh": 4799, "en": 2331}, "hours": 8.774909166666673, "hours_by_language": {"mixed": 3.616870364583333, "zh": 3.504562465277784, "en": 1.653476336805556}, "text_language_mismatch_count": 87, "max_label_tokens": 85, "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "dataset_revision": "737e9800ae31be9932ba8464c80366559bd28424", "preparation_identity": {"dataset": "CAiRE/ASCEND", "dataset_revision": "737e9800ae31be9932ba8464c80366559bd28424", "model": "openai/whisper-small", "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "language_prompt": {"mixed": "zh", "zh": "zh", "en": "en"}}}
+prepare validation 500/1130
+prepare validation 1000/1130
+{"n": 1130, "counts": {"zh": 655, "mixed": 213, "en": 262}, "hours": 0.9232249826388895, "hours_by_language": {"zh": 0.46940256944444475, "mixed": 0.26085586805555566, "en": 0.19296654513888895}, "text_language_mismatch_count": 15, "max_label_tokens": 77, "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "dataset_revision": "737e9800ae31be9932ba8464c80366559bd28424", "preparation_identity": {"dataset": "CAiRE/ASCEND", "dataset_revision": "737e9800ae31be9932ba8464c80366559bd28424", "model": "openai/whisper-small", "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "language_prompt": {"mixed": "zh", "zh": "zh", "en": "en"}}}
+prepare test 500/1315
+prepare test 1000/1315
+{"n": 1315, "counts": {"zh": 685, "en": 257, "mixed": 373}, "hours": 0.9174961631944447, "hours_by_language": {"zh": 0.3354184548611113, "en": 0.15015428819444449, "mixed": 0.4319234201388889}, "text_language_mismatch_count": 6, "max_label_tokens": 53, "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "dataset_revision": "737e9800ae31be9932ba8464c80366559bd28424", "preparation_identity": {"dataset": "CAiRE/ASCEND", "dataset_revision": "737e9800ae31be9932ba8464c80366559bd28424", "model": "openai/whisper-small", "model_revision": "973afd24965f72e36ca33b3055d56a652f456b4d", "language_prompt": {"mixed": "zh", "zh": "zh", "en": "en"}}}

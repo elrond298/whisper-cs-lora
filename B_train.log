@@ -1,0 +1,132 @@
+{"group": "B", "step": 1, "loss": 1.0436758920550346, "lr": 2.0000000000000003e-06, "seconds": 4.446544248999999, "grad_norm": 1.0752674341201782, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 2, "loss": 1.0632710978388786, "lr": 4.000000000000001e-06, "seconds": 2.7020645729990065, "grad_norm": 0.8710986375808716, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 3, "loss": 1.2030765935778618, "lr": 6e-06, "seconds": 2.9668008249991544, "grad_norm": 1.0179353952407837, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 4, "loss": 1.7638845294713974, "lr": 8.000000000000001e-06, "seconds": 2.8252555729995947, "grad_norm": 1.1261942386627197, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 5, "loss": 0.8543184958398342, "lr": 1e-05, "seconds": 2.6695305190005456, "grad_norm": 1.034685730934143, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 6, "loss": 0.9787849336862564, "lr": 1.2e-05, "seconds": 2.7582844689986814, "grad_norm": 1.3338978290557861, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 7, "loss": 0.8405188918113708, "lr": 1.4000000000000001e-05, "seconds": 3.1320038860012573, "grad_norm": 1.1948297023773193, "peak_allocated_MiB": 1109.9140625, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 8, "loss": 1.3741672150790691, "lr": 1.6000000000000003e-05, "seconds": 2.9044173099991895, "grad_norm": 1.2389973402023315, "peak_allocated_MiB": 1110.66943359375, "peak_reserved_MiB": 1250.0}
+{"group": "B", "step": 9, "loss": 1.3313454240560532, "lr": 1.8e-05, "seconds": 2.8299721100011084, "grad_norm": 0.9633200168609619, "peak_allocated_MiB": 1118.7958984375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 10, "loss": 1.3115921970456839, "lr": 2e-05, "seconds": 3.474134017000324, "grad_norm": 0.8462010025978088, "peak_allocated_MiB": 1118.7958984375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 11, "loss": 1.070714807137847, "lr": 2.2000000000000003e-05, "seconds": 3.6563770069988095, "grad_norm": 0.8530784249305725, "peak_allocated_MiB": 1118.7958984375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 12, "loss": 1.3215571865439415, "lr": 2.4e-05, "seconds": 2.9118768090011145, "grad_norm": 1.4634367227554321, "peak_allocated_MiB": 1118.7958984375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 13, "loss": 0.6013613156974316, "lr": 2.6000000000000002e-05, "seconds": 2.704019625000001, "grad_norm": 0.7997996807098389, "peak_allocated_MiB": 1120.92626953125, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 14, "loss": 0.9229447543621063, "lr": 2.8000000000000003e-05, "seconds": 2.5609914639990166, "grad_norm": 0.9042806029319763, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 15, "loss": 1.2562005631625652, "lr": 3e-05, "seconds": 2.9137262019994523, "grad_norm": 0.9568494558334351, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 16, "loss": 0.798183262348175, "lr": 3.2000000000000005e-05, "seconds": 3.2956835069999215, "grad_norm": 1.334049940109253, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 17, "loss": 1.0019354149699211, "lr": 3.4000000000000007e-05, "seconds": 9.720392028000788, "grad_norm": 1.1468003988265991, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 18, "loss": 1.2734914012253284, "lr": 3.6e-05, "seconds": 11.027987915998892, "grad_norm": 0.8840554356575012, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 19, "loss": 0.9989032745361328, "lr": 3.8e-05, "seconds": 11.342045897999924, "grad_norm": 2.106863498687744, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 20, "loss": 1.0834194719791412, "lr": 4e-05, "seconds": 10.793028530999436, "grad_norm": 1.4776535034179688, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 21, "loss": 1.2769944593310356, "lr": 4.2e-05, "seconds": 9.760885973999393, "grad_norm": 1.1765609979629517, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 22, "loss": 1.526495561003685, "lr": 4.4000000000000006e-05, "seconds": 9.70562406299905, "grad_norm": 1.1080206632614136, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 23, "loss": 1.0321871303021908, "lr": 4.600000000000001e-05, "seconds": 9.463335745998847, "grad_norm": 1.3728666305541992, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 24, "loss": 1.0971146747469902, "lr": 4.8e-05, "seconds": 9.711979582998538, "grad_norm": 1.0916961431503296, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 25, "loss": 1.2915469333529472, "lr": 5e-05, "seconds": 9.256648210999629, "grad_norm": 0.9204640984535217, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 26, "loss": 0.867233894765377, "lr": 5.2000000000000004e-05, "seconds": 10.089110339000399, "grad_norm": 0.8720598816871643, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 27, "loss": 1.2715299986302853, "lr": 5.4000000000000005e-05, "seconds": 10.114766433000113, "grad_norm": 1.1297634840011597, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 28, "loss": 1.044028352946043, "lr": 5.6000000000000006e-05, "seconds": 7.470699933001015, "grad_norm": 0.9485428333282471, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 29, "loss": 1.3276331573724747, "lr": 5.8e-05, "seconds": 9.604930792998857, "grad_norm": 1.622667670249939, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 30, "loss": 1.21687613427639, "lr": 6e-05, "seconds": 8.59205980600018, "grad_norm": 1.5090442895889282, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 31, "loss": 1.7386927530169487, "lr": 6.2e-05, "seconds": 6.73216501800016, "grad_norm": 1.1034079790115356, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 32, "loss": 0.7885414510965347, "lr": 6.400000000000001e-05, "seconds": 9.181333716998779, "grad_norm": 0.9261320233345032, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 33, "loss": 0.7459237389266491, "lr": 6.6e-05, "seconds": 9.677696590000778, "grad_norm": 0.6990835666656494, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 34, "loss": 1.333727678284049, "lr": 6.800000000000001e-05, "seconds": 7.013886058000935, "grad_norm": 1.4700826406478882, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 35, "loss": 0.765918405726552, "lr": 7e-05, "seconds": 11.467490900000485, "grad_norm": 0.8749079704284668, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 36, "loss": 0.7988599548116326, "lr": 7.2e-05, "seconds": 9.511821803000203, "grad_norm": 1.4234596490859985, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 37, "loss": 0.7957337684929371, "lr": 7.4e-05, "seconds": 9.29898064200097, "grad_norm": 0.938712477684021, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 38, "loss": 0.8957950100302696, "lr": 7.6e-05, "seconds": 9.43343249999998, "grad_norm": 2.6012537479400635, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 39, "loss": 1.508598535321653, "lr": 7.800000000000001e-05, "seconds": 9.119018241999584, "grad_norm": 2.125443935394287, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 40, "loss": 1.0113861551508307, "lr": 8e-05, "seconds": 7.136286224998912, "grad_norm": 1.2207881212234497, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 41, "loss": 0.9185942113399506, "lr": 8.2e-05, "seconds": 9.240448078000554, "grad_norm": 1.433265209197998, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 42, "loss": 1.192717518657446, "lr": 8.4e-05, "seconds": 9.349709315998552, "grad_norm": 1.303029179573059, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 43, "loss": 0.9271794259548187, "lr": 8.6e-05, "seconds": 9.388919154000178, "grad_norm": 1.227376937866211, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 44, "loss": 0.7714441958814859, "lr": 8.800000000000001e-05, "seconds": 9.997847551001541, "grad_norm": 0.828238308429718, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 45, "loss": 0.8741399850696325, "lr": 9e-05, "seconds": 10.186165226999947, "grad_norm": 1.0316826105117798, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 46, "loss": 0.6258709630928934, "lr": 9.200000000000001e-05, "seconds": 10.259633137000492, "grad_norm": 1.261789321899414, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 47, "loss": 0.8171575646847486, "lr": 9.4e-05, "seconds": 7.846341161000964, "grad_norm": 1.0644277334213257, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 48, "loss": 1.3137241508811712, "lr": 9.6e-05, "seconds": 11.04700539499936, "grad_norm": 1.3841078281402588, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 49, "loss": 0.8229612372815609, "lr": 9.8e-05, "seconds": 13.147942075000174, "grad_norm": 1.003537893295288, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 50, "loss": 0.5424705166369677, "lr": 0.0001, "seconds": 7.522176475999004, "grad_norm": 0.897220253944397, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 51, "loss": 0.6628959383815527, "lr": 9.986666666666668e-05, "seconds": 10.307732956000109, "grad_norm": 1.2647258043289185, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 52, "loss": 0.9544003400951624, "lr": 9.973333333333334e-05, "seconds": 11.669249747999856, "grad_norm": 1.1177451610565186, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 53, "loss": 0.9458862338215113, "lr": 9.960000000000001e-05, "seconds": 15.647691289999784, "grad_norm": 1.3707085847854614, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 54, "loss": 1.311245709657669, "lr": 9.946666666666668e-05, "seconds": 7.77828361200045, "grad_norm": 1.6446586847305298, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 55, "loss": 1.2624978667590767, "lr": 9.933333333333334e-05, "seconds": 11.803768966999996, "grad_norm": 2.021463632583618, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 56, "loss": 1.0539506785571575, "lr": 9.92e-05, "seconds": 14.91135331499936, "grad_norm": 1.5925853252410889, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 57, "loss": 1.1566437100991607, "lr": 9.906666666666667e-05, "seconds": 14.876670645000559, "grad_norm": 1.391153335571289, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 58, "loss": 0.6610515667125583, "lr": 9.893333333333333e-05, "seconds": 12.482427205000931, "grad_norm": 0.8241363763809204, "peak_allocated_MiB": 1122.52490234375, "peak_reserved_MiB": 1252.0}
+{"group": "B", "step": 59, "loss": 0.8737527457997203, "lr": 9.88e-05, "seconds": 9.82765660000041, "grad_norm": 1.3592901229858398, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 60, "loss": 0.9688672553747892, "lr": 9.866666666666668e-05, "seconds": 15.174590508999245, "grad_norm": 2.017192840576172, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 61, "loss": 0.8098797760903835, "lr": 9.853333333333333e-05, "seconds": 16.29045052999936, "grad_norm": 0.8407230377197266, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 62, "loss": 0.6749468753114343, "lr": 9.84e-05, "seconds": 12.045080214998961, "grad_norm": 1.355467438697815, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 63, "loss": 0.502974727191031, "lr": 9.826666666666668e-05, "seconds": 11.134390097000505, "grad_norm": 0.9823511838912964, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 64, "loss": 0.7696869149804115, "lr": 9.813333333333334e-05, "seconds": 13.556046550000246, "grad_norm": 1.5322444438934326, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 65, "loss": 1.1372014209628105, "lr": 9.8e-05, "seconds": 12.795899646998805, "grad_norm": 1.315996766090393, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 66, "loss": 1.134294613264501, "lr": 9.786666666666667e-05, "seconds": 14.072288809000383, "grad_norm": 1.111907958984375, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+{"group": "B", "step": 67, "loss": 0.6822178543079644, "lr": 9.773333333333334e-05, "seconds": 15.306004361000305, "grad_norm": 1.0712887048721313, "peak_allocated_MiB": 1127.86767578125, "peak_reserved_MiB": 1266.0}
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/random.py", line 199, in fork_rng
+    yield
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 1518, in recompute_fn
+    fn(*args, **kwargs)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/transformers/models/whisper/modeling_whisper.py", line 422, in forward
+    hidden_states = self.fc2(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 1086, in pack_hook
+    raise _StopRecomputationError
+torch.utils.checkpoint._StopRecomputationError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 365, in <module>
+    main()
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 359, in main
+    train(args.group, args.steps or config["steps"], config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 241, in train
+    loss_mean, norm = optimizer_update(model, optimizer, scaler, batch, config["max_grad_norm"])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 171, in optimizer_update
+    scaler.scale(loss / len(batch)).backward()
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/autograd/__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/autograd/graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 1124, in unpack_hook
+    frame.recompute_fn(*args)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/utils/checkpoint.py", line 1506, in recompute_fn
+    with torch.random.fork_rng(
+  File "/usr/lib64/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/random.py", line 203, in fork_rng
+    device_mod.set_rng_state(device_rng_state, device)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/cuda/random.py", line 76, in set_rng_state
+    _lazy_call(cb)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/cuda/__init__.py", line 302, in _lazy_call
+    callable()
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/.venv/lib64/python3.11/site-packages/torch/cuda/random.py", line 74, in cb
+    default_generator.set_state(new_state_copy)
+RuntimeError: CUDA error: unknown error
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

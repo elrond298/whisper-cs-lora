@@ -1,0 +1,381 @@
+test_cache_requires_matching_preparation_identity (test_pipeline.ArtifactGuardTests.test_cache_requires_matching_preparation_identity) ... ERROR
+test_cli_does_not_replace_explicit_zero_steps_with_full_budget (test_pipeline.ArtifactGuardTests.test_cli_does_not_replace_explicit_zero_steps_with_full_budget) ... FAIL
+test_completed_training_is_a_real_noop (test_pipeline.ArtifactGuardTests.test_completed_training_is_a_real_noop) ... ERROR
+test_evaluate_rejects_changed_training_config_before_loading_or_writing (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_changed_training_config_before_loading_or_writing) ... 
+  test_evaluate_rejects_changed_training_config_before_loading_or_writing (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_changed_training_config_before_loading_or_writing) (field='model_revision') ... FAIL
+  test_evaluate_rejects_changed_training_config_before_loading_or_writing (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_changed_training_config_before_loading_or_writing) (field='max_new_tokens') ... FAIL
+test_evaluate_rejects_unbound_or_changed_existing_predictions (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_unbound_or_changed_existing_predictions) ... 
+  test_evaluate_rejects_unbound_or_changed_existing_predictions (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_unbound_or_changed_existing_predictions) (missing_metadata=False) ... FAIL
+  test_evaluate_rejects_unbound_or_changed_existing_predictions (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_unbound_or_changed_existing_predictions) (missing_metadata=True) ... FAIL
+test_summary_accepts_complete_bound_predictions (test_pipeline.ArtifactGuardTests.test_summary_accepts_complete_bound_predictions) ... Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 1.209 seconds.
+Prefix dict has been built successfully.
+ok
+test_summary_rejects_stale_checkpoint_or_decoding_identity (test_pipeline.ArtifactGuardTests.test_summary_rejects_stale_checkpoint_or_decoding_identity) ... 
+  test_summary_rejects_stale_checkpoint_or_decoding_identity (test_pipeline.ArtifactGuardTests.test_summary_rejects_stale_checkpoint_or_decoding_identity) (field='adapter_sha256') ... FAIL
+  test_summary_rejects_stale_checkpoint_or_decoding_identity (test_pipeline.ArtifactGuardTests.test_summary_rejects_stale_checkpoint_or_decoding_identity) (field='limit_per_language') ... FAIL
+test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) ... 
+  test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='id', value=2000) ... FAIL
+  test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='reference', value='wrong reference') ... FAIL
+  test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='language', value='zh') ... ERROR
+test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) ... 
+  test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=0) ... FAIL
+  test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=-1) ... FAIL
+  test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=801) ... FAIL
+  test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=50) ... FAIL
+  test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='A', steps=800) ... FAIL
+
+======================================================================
+ERROR: test_cache_requires_matching_preparation_identity (test_pipeline.ArtifactGuardTests.test_cache_requires_matching_preparation_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 176, in test_cache_requires_matching_preparation_identity
+    rows, features = asr.load_split("train", self.config)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: load_split() takes 1 positional argument but 2 were given
+
+======================================================================
+ERROR: test_completed_training_is_a_real_noop (test_pipeline.ArtifactGuardTests.test_completed_training_is_a_real_noop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 210, in test_completed_training_is_a_real_noop
+    asr.train("B", 800, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 186, in train
+    raise RuntimeError("CUDA required: no CPU fallback for hardware acceptance")
+RuntimeError: CUDA required: no CPU fallback for hardware acceptance
+
+======================================================================
+ERROR: test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='language', value='zh')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 126, in test_summary_rejects_wrong_ids_references_and_languages_before_writes
+    report.main()
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/summarize.py", line 36, in main
+    verdict = compare(results["A"], results["B"], results["C"])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/metrics.py", line 77, in compare
+    delta = {key: c[key]["percent"] - b[key]["percent"] for key in c}
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/metrics.py", line 77, in <dictcomp>
+    delta = {key: c[key]["percent"] - b[key]["percent"] for key in c}
+                  ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
+
+======================================================================
+FAIL: test_cli_does_not_replace_explicit_zero_steps_with_full_budget (test_pipeline.ArtifactGuardTests.test_cli_does_not_replace_explicit_zero_steps_with_full_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 217, in test_cli_does_not_replace_explicit_zero_steps_with_full_budget
+    train.assert_called_once_with("B", 0, self.config)
+  File "/usr/lib64/python3.11/unittest/mock.py", line 951, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 939, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: expected call not found.
+Expected: train('B', 0, {'model': 'openai/whisper-small', 'model_revision': '973afd24965f72e36ca33b3055d56a652f456b4d', 'dataset': 'CAiRE/ASCEND', 'dataset_revision': '737e9800ae31be9932ba8464c80366559bd28424', 'seed': 42, 'steps': 800, 'batch_size': 1, 'gradient_accumulation': 8, 'learning_rate': 0.0001, 'warmup_steps': 50, 'weight_decay': 0.01, 'max_grad_norm': 1.0, 'lora_rank': 8, 'lora_alpha': 16, 'lora_dropout': 0.05, 'lora_targets': ['q_proj', 'v_proj'], 'fp16': True, 'gradient_checkpointing': True, 'mixed_probability_C': 0.5, 'sampling_replacement': True, 'audio_budget': '8 examples x 30 seconds padded input per optimizer update; actual speech seconds reported separately; user approved', 'eval_batch_size': 4, 'max_new_tokens': 256, 'num_beams': 1, 'forced_decoder_ids': None, 'suppress_tokens': [], 'begin_suppress_tokens': [220, 50257], 'language_prompt': {'mixed': 'zh', 'zh': 'zh', 'en': 'en'}, 'collapse': {'repeat_ngram_min': 3, 'repeat_count': 4, 'rate_threshold_percent': 5.0}, 'thresholds_pp': {'zh_CER': 0.5, 'en_WER': 0.8, 'overall_MER': 0.3}, 'checkpoint_selection': 'final fixed-budget checkpoint; no best-test selection', 'primary_metric': 'mixed_MER_percent'})
+  Actual: train('B', 800, {'model': 'openai/whisper-small', 'model_revision': '973afd24965f72e36ca33b3055d56a652f456b4d', 'dataset': 'CAiRE/ASCEND', 'dataset_revision': '737e9800ae31be9932ba8464c80366559bd28424', 'seed': 42, 'steps': 800, 'batch_size': 1, 'gradient_accumulation': 8, 'learning_rate': 0.0001, 'warmup_steps': 50, 'weight_decay': 0.01, 'max_grad_norm': 1.0, 'lora_rank': 8, 'lora_alpha': 16, 'lora_dropout': 0.05, 'lora_targets': ['q_proj', 'v_proj'], 'fp16': True, 'gradient_checkpointing': True, 'mixed_probability_C': 0.5, 'sampling_replacement': True, 'audio_budget': '8 examples x 30 seconds padded input per optimizer update; actual speech seconds reported separately; user approved', 'eval_batch_size': 4, 'max_new_tokens': 256, 'num_beams': 1, 'forced_decoder_ids': None, 'suppress_tokens': [], 'begin_suppress_tokens': [220, 50257], 'language_prompt': {'mixed': 'zh', 'zh': 'zh', 'en': 'en'}, 'collapse': {'repeat_ngram_min': 3, 'repeat_count': 4, 'rate_threshold_percent': 5.0}, 'thresholds_pp': {'zh_CER': 0.5, 'en_WER': 0.8, 'overall_MER': 0.3}, 'checkpoint_selection': 'final fixed-budget checkpoint; no best-test selection', 'primary_metric': 'mixed_MER_percent'})
+
+======================================================================
+FAIL: test_evaluate_rejects_changed_training_config_before_loading_or_writing (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_changed_training_config_before_loading_or_writing) (field='model_revision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 147, in test_evaluate_rejects_changed_training_config_before_loading_or_writing
+    asr.evaluate("B", "test", {**self.config, field: value})
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 272, in evaluate
+    rows, features = load_split(split)
+                     ^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+======================================================================
+FAIL: test_evaluate_rejects_changed_training_config_before_loading_or_writing (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_changed_training_config_before_loading_or_writing) (field='max_new_tokens')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 147, in test_evaluate_rejects_changed_training_config_before_loading_or_writing
+    asr.evaluate("B", "test", {**self.config, field: value})
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 272, in evaluate
+    rows, features = load_split(split)
+                     ^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+======================================================================
+FAIL: test_evaluate_rejects_unbound_or_changed_existing_predictions (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_unbound_or_changed_existing_predictions) (missing_metadata=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 165, in test_evaluate_rejects_unbound_or_changed_existing_predictions
+    asr.evaluate("B", "test", self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 298, in evaluate
+    proc = processor(config)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded processor
+
+======================================================================
+FAIL: test_evaluate_rejects_unbound_or_changed_existing_predictions (test_pipeline.ArtifactGuardTests.test_evaluate_rejects_unbound_or_changed_existing_predictions) (missing_metadata=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 165, in test_evaluate_rejects_unbound_or_changed_existing_predictions
+    asr.evaluate("B", "test", self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 298, in evaluate
+    proc = processor(config)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded processor
+
+======================================================================
+FAIL: test_summary_rejects_stale_checkpoint_or_decoding_identity (test_pipeline.ArtifactGuardTests.test_summary_rejects_stale_checkpoint_or_decoding_identity) (field='adapter_sha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 136, in test_summary_rejects_stale_checkpoint_or_decoding_identity
+    with self.assertRaises(RuntimeError):
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_summary_rejects_stale_checkpoint_or_decoding_identity (test_pipeline.ArtifactGuardTests.test_summary_rejects_stale_checkpoint_or_decoding_identity) (field='limit_per_language')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 136, in test_summary_rejects_stale_checkpoint_or_decoding_identity
+    with self.assertRaises(RuntimeError):
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='id', value=2000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 125, in test_summary_rejects_wrong_ids_references_and_languages_before_writes
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_summary_rejects_wrong_ids_references_and_languages_before_writes (test_pipeline.ArtifactGuardTests.test_summary_rejects_wrong_ids_references_and_languages_before_writes) (field='reference', value='wrong reference')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 125, in test_summary_rejects_wrong_ids_references_and_languages_before_writes
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 201, in test_training_rejects_invalid_targets_before_writes
+    asr.train(group, steps, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 188, in train
+    rows, features = load_split("train")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+======================================================================
+FAIL: test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 201, in test_training_rejects_invalid_targets_before_writes
+    asr.train(group, steps, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 188, in train
+    rows, features = load_split("train")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+======================================================================
+FAIL: test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=801)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 201, in test_training_rejects_invalid_targets_before_writes
+    asr.train(group, steps, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 188, in train
+    rows, features = load_split("train")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+======================================================================
+FAIL: test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='B', steps=50)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 201, in test_training_rejects_invalid_targets_before_writes
+    asr.train(group, steps, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 188, in train
+    rows, features = load_split("train")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+======================================================================
+FAIL: test_training_rejects_invalid_targets_before_writes (test_pipeline.ArtifactGuardTests.test_training_rejects_invalid_targets_before_writes) (group='A', steps=800)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/test_pipeline.py", line 201, in test_training_rejects_invalid_targets_before_writes
+    asr.train(group, steps, self.config)
+  File "/mnt/wsl/PHYSICALDRIVE1p1/opt/asr-finetune/asr.py", line 188, in train
+    rows, features = load_split("train")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: loaded data
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.439s
+
+FAILED (failures=14, errors=3)
+{
+  "C_minus_B_percentage_points": {
+    "overall": 0.0,
+    "mixed": 0.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": true,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "all_hard_gates_pass": true
+}
+{
+  "C_minus_B_percentage_points": {
+    "overall": 0.0,
+    "mixed": 0.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": true,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "all_hard_gates_pass": true
+}
+{
+  "C_minus_B_percentage_points": {
+    "overall": 0.0,
+    "mixed": 0.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": true,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "all_hard_gates_pass": true
+}
+{
+  "C_minus_B_percentage_points": {
+    "overall": 0.0,
+    "mixed": 0.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": true,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "all_hard_gates_pass": true
+}
+{
+  "C_minus_B_percentage_points": {
+    "overall": 60.0,
+    "mixed": 150.0,
+    "zh": 0.0,
+    "en": 0.0
+  },
+  "metric_hard_gates_pass": true,
+  "mixed_improved": false,
+  "monolingual_thresholds_pass": true,
+  "overall_threshold_pass": false,
+  "verdict": "no_detectable_benefit_or_worse",
+  "caveat": "Single seed; any decrease is descriptive, not proof of statistical significance.",
+  "same_BC_config": true,
+  "same_BC_initialization": true,
+  "fixed_BC_steps": true,
+  "hardware_50_steps_pass": true,
+  "all_hard_gates_pass": true
+}

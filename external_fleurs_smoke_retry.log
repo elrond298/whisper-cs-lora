@@ -1,0 +1,10 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.421 seconds.
+Prefix dict has been built successfully.
+fleurs_zh/A: 4/300
+fleurs_zh/B: 4/300
+fleurs_zh/C: 4/300
+fleurs_en/A: 4/300
+fleurs_en/B: 4/300
+fleurs_en/C: 4/300

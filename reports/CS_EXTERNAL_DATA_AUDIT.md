@@ -1,0 +1,19 @@
+# CS-Dialogue external subset data audit
+
+Data preparation only: **450 frozen mixed-test utterances**, 30/30 official test speakers. No inference, model loading, GPU use, or changes to original ASCEND artifacts.
+
+- Source: `BAAI/CS-Dialogue`, revision `a84770fcdf14072252373a0227321227eaac7dc7`; official short-wav test indices only.
+- Initial official `<MIX>` pool: **1034**. Text-eligible: **997**. Final audio/text-eligible: **900**. Excluded: **134**.
+- Exclusive first-failure exclusion counts: `{"over_30_seconds": 97, "not_mixed_after_tag_removal": 6, "unintelligible_or_privacy_masked_double_asterisk": 31}`. Full per-source decisions: local `data/external_eval/cs_dialogue/pool.json`.
+- Fixed sample size: `min(500, floor(900/2)) = 450`, seed 42. Speaker round-robin covers all available speakers before extra allocations, redistributes shortages, and rotates available topics within each speaker. Final order randomized. No result-based selection.
+- Selected speaker allocations: `{"0017": 16, "0018": 15, "0031": 8, "0032": 10, "0033": 15, "0034": 16, "0043": 15, "0044": 15, "0065": 15, "0066": 16, "0073": 16, "0074": 16, "0077": 16, "0078": 15, "0089": 16, "0090": 16, "1005": 16, "1006": 15, "1019": 15, "1020": 16, "1069": 15, "1070": 15, "1073": 16, "1074": 16, "1085": 15, "1086": 15, "1093": 15, "1094": 15, "2001": 15, "2002": 15}`.
+- Selected topic counts: `{"education": 59, "entertainment": 93, "job": 29, "personal topics": 123, "philosophy": 10, "sports": 103, "technology": 33}`. Topic is published metadata, not inferred dialogue identity.
+- Audio: 16 kHz mono, finite full decodes, nonzero, <=30 seconds; no resampling/cropping/re-encoding. Selected duration 6014.544000 s; range 2.095000–29.845000 s.
+- Cleaning: remove `<...>` tags, collapse whitespace, retain words/punctuation/case; reject any `**`, then require Han + ASCII Latin in cleaned text. Official test `text` is authoritative; two information-table discrepancies contain less privacy masking and are not used to restore names.
+- Manifest: `data/external_eval/cs_dialogue/manifest.json`, SHA256 `2f20ac100a0d876c4798a3976bc3e4d32cecc89839cbbaab7d3eb4fceb20eb30`. Unique namespaced IDs; speaker-based cluster IDs. Every selected audio SHA256 and complete decode reverified before readiness.
+- Acquisition: 19 byte-split parts read in order into one gzip stream, not treated as independent shards. Checked 39093 tar member paths/types/duplicates, extracted only text-eligible mixed candidates. No extractall, traversal, links or special files. Every compressed part matches pinned LFS SHA256; full gzip trailer/CRC validated. Original remote audio untouched.
+- Archive payload: 9,595,542,742 bytes; script measured HTTP response bodies: 9,603,599,343 bytes (metadata, probes, retries included). HTTP/TLS overhead and earlier source-investigation traffic excluded. No long audio or compressed archive files retained. Selected WAVs: 192,485,208 bytes. Local data storage before audit: 201,829,101 bytes, excluding this audit/ready marker. Metadata includes the full official information table and remains local.
+- Access: API `gated:false`; public unauthenticated retrieval worked without forms or identities. Source card is retained locally. **Local noncommercial research only; no redistribution of CS audio/transcripts/derivatives to third parties without required written permission.** These files must not enter public delivery packages.
+- Limits: no listening/ASR inference, no verified dialogue IDs, no proven ASCEND waveform nonoverlap, and no pretraining-contamination guarantee. Parent task owns preservation checks and downstream evaluation/statistics.
+
+Machine-readable counts, source hashes, exclusions, speaker/topic distributions, bandwidth/storage, and validation: `reports/CS_EXTERNAL_DATA_AUDIT.json` and local `audit.json`. `ready.json` is written atomically only after successful complete validation and report output.
