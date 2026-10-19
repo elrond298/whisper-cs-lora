@@ -82,4 +82,4 @@
 | 39 / 719 | 对然后当时that's the reason I know the [UNK] um the famous player McGrady | 对然后当时that's the reason i know themigrate呃the famous player migratie | 英文词替换/拼写、英文词边界/分词、语气词差异、含UNK不确定 | McGrady→migratie，专名拼写/边界错误；um→呃。[UNK]附近的themigrate无法逐词可靠判定。 |
 | 40 / 267 | 啊lifestyle啊之类的 | 呃lifestyle啊之类的 | 语气词差异 | 首个啊→呃；lifestyle 保留。 |
 
-机器可读复核结果见 `reports/error_analysis_40.json`；原始 token IDs 与崩溃标记保留在C完整预测及抽样原件中。
+机器可读复核结果见 `evidence/checks/error_analysis_40.json`；原始 token IDs 与崩溃标记保留在C完整预测及抽样原件中。

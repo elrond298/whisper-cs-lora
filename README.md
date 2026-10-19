@@ -51,7 +51,7 @@
 | 优化 | AdamW，lr 1e-4，线性衰减 + 50 步 warmup，weight decay 0.01，梯度裁剪 1.0，每组 800 次优化器更新，seed 42 | `config.json`、`asr.py` |
 | 显存与精度 | fp16 autocast + GradScaler；microbatch 1 × 梯度累积 8；启用 gradient checkpointing（non-reentrant） | `config.json`、`asr.py` |
 | 显存峰值 | B allocated 1,134.6 MiB / reserved 1,278 MiB；C 1,136.4 / 1,270 MiB | `artifacts/training_summary.json` |
-| 训练耗时 | 单步中位数 B 8.73 s、C 2.48 s；按每步日志累加 B 2.02 h、C 0.55 h | `B_train*.log`、`C_train.log` |
+| 训练耗时 | 单步中位数 B 8.73 s、C 2.48 s；按每步日志累加 B 2.02 h、C 0.55 h | `evidence/logs/B_train*.log`、`evidence/logs/C_train.log` |
 | 语言前缀 | mixed 与中文都喂 `zh` 语言 token，英文喂 `en`；task 固定 `transcribe`；训练与推理读同一份映射，不存在训练用中文前缀、评测换标签的情况 | `config.json`、`asr.py` |
 
 两个测量口径，避免误读：
@@ -179,7 +179,7 @@ uv run python summarize.py
 
 所有正式训练是 800 个**优化器更新**，不是 800 个 microbatch。每步 8 条、每条补齐到 30 秒。B/C 的初始化 SHA-256、学习率、scheduler、步数、LoRA、数据池与解码配置必须一致；正式运行时不要改根目录 `config.json`。
 
-正常训练不启用同步 CUDA 诊断；只有出现 CUDA 异常时才临时设置 `CUDA_LAUNCH_BLOCKING=1` 定位（见 [`reports/B_INTERRUPTION.md`](reports/B_INTERRUPTION.md)），定位后 `unset CUDA_LAUNCH_BLOCKING` 再继续。
+正常训练不启用同步 CUDA 诊断；只有出现 CUDA 异常时才临时设置 `CUDA_LAUNCH_BLOCKING=1` 定位（见 [`evidence/milestones/B_INTERRUPTION.md`](evidence/milestones/B_INTERRUPTION.md)），定位后 `unset CUDA_LAUNCH_BLOCKING` 再继续。
 
 ## 5. 中断、续跑与重复执行
 
@@ -200,7 +200,7 @@ uv run python summarize.py
 2. 重新 `prepare`（需要网络与存储），再用 `artifacts/data_audit.json` 的条数、语言比例、时长核对数值是否一致；
 3. 评测身份不符时，恢复完整且匹配的 `artifacts/`，或重建对应 adapter；不要把新旧预测混在同一文件。
 
-参考先例：本次审查后曾完整重建缓存，3 个 split 的 9 个文件 SHA-256 逐一相同、审计数值不变（`reports/CACHE_REBUILD_VERIFICATION.json`）；旧缓存与旧交付包保存在 `delivery/pre-review/`，未就地改写。
+参考先例：本次审查后曾完整重建缓存，3 个 split 的 9 个文件 SHA-256 逐一相同、审计数值不变（`evidence/checks/CACHE_REBUILD_VERIFICATION.json` 记录了这 9 个哈希）。旧交付包与核验快照仍保存在 `delivery/pre-review/`，未就地改写；旧缓存副本与原件哈希一致，已在整理时删除，只保留记录，不保留重复数据。
 
 ## 7. 交付与校验
 
@@ -211,7 +211,8 @@ uv run python summarize.py
 - `artifacts/comparison.json`、`artifacts/training_summary.json`：统一重算的指标、门槛与对照可比性。
 - `artifacts/error_review_40.json`：固定种子抽取的 40 条 mixed 样例；AI 复核报告在 `reports/ERROR_ANALYSIS.md`。
 - `reports/RESULTS.md`：由 `summarize.py` 生成；`reports/FINAL_REPORT.md`、`ERROR_ANALYSIS.md`、`VERIFICATION.md` 为 AI 整理的非自动汇总文档（不是人工撰写，也不是人工听音核验）。
-- `SHA256SUMS`：本版 101 个交付文件的 SHA-256 清单。解压后运行 `sha256sum -c SHA256SUMS` 核对完整性；修改代码、文档或派生文件后需要重新生成清单，不能继续引用旧校验结论。
+- `evidence/`：过程记录，不是结论——训练/评测原始日志（`logs/`）、里程碑与中断说明（`milestones/`）、审查与测试快照（`reviews/`）、机器核验 JSON（`checks/`）。引用结论仍以 `reports/` 与 `artifacts/` 为准，索引见 `evidence/README.md`。
+- `SHA256SUMS`：本版 101 个交付文件的 SHA-256 清单。解压后运行 `sha256sum -c SHA256SUMS` 核对完整性；修改代码、文档或派生文件后需要重新生成清单，不能继续引用旧校验结论。该清单与 `EXTERNAL_SHA256SUMS` 描述的是两个归档包内部的结构；仓库工作树在本版交付后做过目录整理（见 `evidence/README.md`），路径可能与清单不同，核验请在归档解压目录执行。
 - `delivery/asr-finetune-complete.tar.gz`：可移交包，不含 `.venv`、基础模型缓存和 `data/` 特征。
 
 **交付核验**：审查后的同版代码、权重与预测已在隔离解压目录通过 **17 项测试、101 个文件哈希和 CPU 指标精确复算**；验证时禁用 GPU、阻断网络连接与 DNS，并使用空模型缓存。正式归档后的结果、大小与哈希另附于 `delivery/verification.json` 和 `.sha256` 文件，避免归档自引用；审查前的 7 项/90 文件快照保存在 `delivery/pre-review/`。核验复用了本机已安装的固定依赖，并不证明全新机器可以完全离线安装或重训；重新生成仍需准备数据与基础模型。

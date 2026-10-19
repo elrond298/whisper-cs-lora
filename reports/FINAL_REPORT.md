@@ -94,7 +94,7 @@ B对A的提升远大于C对B的增益，说明本次域内LoRA微调有效；新
 - B异常当时有其它GPU/CPU负载；没有报告CUDA OOM，但外部根因未确认。没有终止其它用户进程，亦未改变数值超参数。FP16重放不保证bitwise一致；已观察的重放loss差异很小但非零。
 - B的同步诊断、共享负载与C不同，**此耗时表不能用于证明过采样加速**。B最后300步正常执行平均2.802秒/步。表中是有效更新记录的step耗时，不是完整端到端墙钟时间，不含全部装载、保存、评测和丢弃重算。
 - 显存为PyTorch进程分配/预留峰值，约1.11/1.25GiB，不包括所有CUDA上下文、桌面和其它程序；全卡时间序列保留在artifacts/gpu_monitor.csv，不能把其总量全归于Whisper。
-- 原始故障和恢复记录见B_INTERRUPTION.md；B门槛检查见B_GATE.md。
+- 原始故障和恢复记录见evidence/milestones/B_INTERRUPTION.md；B门槛检查见evidence/milestones/B_GATE.md。
 
 ## 7. 错误分析
 
@@ -102,7 +102,7 @@ B对A的提升远大于C对B的增益，说明本次域内LoRA微调有效；新
 
 残留问题包括英文专名/拼写、词边界、英文被中文替代、中文近音字、语气词跨文字差异。例：privacy→private school，badminton→Bankman腾，Hong Kong→香港。尤其“并不需要→必须要”说明0%输出崩溃并不等于语义正确。切换处声学断句无法仅凭此文本确认，没有编造该类别的发生数。
 
-40条完整参考、预测、分类、备注见ERROR_ANALYSIS.md及error_analysis_40.json；主结论仍由全部373条mixed评测决定，不用个别样例替代主判断。
+40条完整参考、预测、分类、备注见ERROR_ANALYSIS.md及evidence/checks/error_analysis_40.json；主结论仍由全部373条mixed评测决定，不用个别样例替代主判断。
 
 ## 8. 验收逐项
 
@@ -127,7 +127,7 @@ B对A的提升远大于C对B的增益，说明本次域内LoRA微调有效；新
 - checkpoint：artifacts/B/adapter/、artifacts/C/adapter/；相应resume.pt包含optimizer/scheduler/scaler/RNG；A为固定原模型，没有LoRA adapter。
 - 预测与指标：artifacts/{A,B,C}/test_predictions.jsonl、test_metrics.json；B/C另有完整validation预测与指标。
 - 过程证据：artifacts/{pilot,B,C}/train.jsonl、sampling.json、initialization.json、progress.json、training_complete.json及根目录原始log。
-- 汇总：artifacts/comparison.json、training_summary.json；reports/RESULTS.md可由summarize.py重生成；`artifacts/error_review_40.json`会由该脚本重新抽样生成，AI 文本复核结论（非真人听音）保存在`reports/error_analysis_40.json`与`ERROR_ANALYSIS.md`，不受其覆盖。
+- 汇总：artifacts/comparison.json、training_summary.json；reports/RESULTS.md可由summarize.py重生成；`artifacts/error_review_40.json`会由该脚本重新抽样生成，AI 文本复核结论（非真人听音）保存在`evidence/checks/error_analysis_40.json`与`ERROR_ANALYSIS.md`，不受其覆盖。
 - 可移交包：`delivery/asr-finetune-complete.tar.gz`；不含 `.venv`、基础模型缓存或 `data/`。本版 101 个文件的校验清单为 `SHA256SUMS`；正式归档后的隔离核验结果及包哈希记录在归档外的 `delivery/verification.json` 与 `.sha256` 文件。
 - **本轮核验**：同版代码、权重与预测的候选归档已在无 GPU、网络连接与 DNS 被阻断、模型缓存为空的解压目录通过 17 项测试；A/B/C 测试指标、B/C 验证指标精确重算，101 个文件哈希在复算前后均一致。两组各 144 个 optimizer 计数均为 800，导出的 144 个 adapter 张量分别与恢复点完全相同。正式归档后的核验由上述外部记录给出；审查前 7 项测试/90 文件的旧快照保存在 `delivery/pre-review/`。依赖复用了已安装的固定环境，不是全新机器离线安装验证。
 
