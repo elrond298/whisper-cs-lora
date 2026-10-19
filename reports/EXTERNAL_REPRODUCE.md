@@ -143,8 +143,8 @@ done
 uv run python -m unittest -v test_pipeline test_external_eval test_external_fleurs test_external_cs
 ```
 
-最终 39 项测试全部通过；独立修复复核确认 P2 已解决。公开包隔离解压后，69 个文件哈希通过，1800 条 FLEURS 预测通过 token/文本校验，六组指标与差值区间精确复算；GPU 禁用、网络/DNS 阻断、HF 缓存初始为空。复用了已安装的固定依赖，不是全新机器安装验证。CS 全部 1350 条预测另已在获准本地目录复核，公开包不含其逐条材料。最终证据见交付目录 `delivery/external-verification.json`。
+最终 39 项测试全部通过；独立修复复核确认 P2 已解决。公开包隔离解压后，69 个文件哈希通过，1800 条 FLEURS 预测通过 token/文本校验，六组指标与差值区间精确复算；GPU 禁用、网络/DNS 阻断、HF 缓存初始为空。复用了已安装的固定依赖。CS 全部 1350 条预测另已在获准本地目录复核，公开包不含其逐条材料。最终证据见交付目录 `delivery/external-verification.json`。
 
 口径：CS MER 用本项目原有作者兼容口径；FLEURS 中文用 BasicTextNormalizer 后按字 CER；英文用 EnglishTextNormalizer（空拼写别名映射）后按空格分词 WER。参考和预测使用相同规范化。原 ASCEND 历史数值不改口径；不同口径的绝对分不能混成总分，也不能直接当公开榜单分数。
 
-配对区间只描述当前固定模型和子集。CS 按说话人分组，但说话人 ID 未验证为独立对话；FLEURS 缺说话人 ID，只按句子 ID 分组。区间不覆盖训练随机种子变化。“区间跨 0”或“跨容忍界限”都不等于“没有退化”，也不等于生产可用。
+配对区间只描述当前固定模型和子集。CS 按说话人分组，但说话人 ID 未验证为独立对话；FLEURS 缺说话人 ID，只按句子 ID 分组。区间不覆盖训练随机种子变化。

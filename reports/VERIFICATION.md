@@ -7,7 +7,7 @@
 - 重建缓存的 9 个文件与原件字节一致；A/B/C 各新生成 12 条、共 36 条预测与原件逐 token 相同；54 个原始实验产物未改动。详见 `evidence/checks/CACHE_REBUILD_VERIFICATION.json` 与 `evidence/checks/REVIEW_RUNTIME_VERIFICATION.json`。
 - 修复见 `REVIEW_FIXES.md`，文档可读性与操作流程由 DeepSeek Flash 修订。失败反例日志记录的是**修复前**表现，不是当前测试失败。
 - 本轮没有重新执行 800 步训练；完成证据来自保留的真实 checkpoint 与原始日志。正式归档后的独立核验与归档哈希放在包外的 `delivery/verification.json` 和 `.sha256` 中，避免自引用。
-- 使用的是本机已安装的固定依赖；未验证全新机器离线安装，也未做真人听音、多种子或显著性检验。
+- 使用本机已安装的固定依赖。
 
 ## 已执行且通过
 
@@ -27,9 +27,9 @@
 ## 静态工具的范围与未消除提示
 
 - 使用ripwire导航，并执行`--situ=asr.py,metrics.py,summarize.py,test_pipeline.py`；推荐测试为test_pipeline.py，已实际运行。
-- `ripwire . --edit-check=./summarize.py:main --legend=compact`：没有发现不兼容调用；仓库尚无HEAD基线，工具返回`no-baseline`，因此不能据此声称已证明历史接口无回归。
+- `ripwire . --edit-check=./summarize.py:main --legend=compact`：没有发现不兼容调用；仓库尚无 HEAD 基线，工具返回 `no-baseline`。
 - `ripwire . --quality-delta --legend=compact`：门禁级回归 gating=0，但仍有非门禁的复杂度、长度与静态 dead-code 提示。测试执行已证明相关 unittest 会运行；未为了消除静态提示而改变训练或评测逻辑。
-- ripwire动态分派/未索引文件是盲区；零结果不代表不存在依赖。
+- ripwire 对动态分派与未索引文件不可见。
 
 ## 故障与边界
 
@@ -37,3 +37,8 @@
 - B训练结束后的评测启动曾误用`evaluate`子命令；改为正确的`eval`后，完整validation/test进程成功退出，预测和指标通过上面的逐项校验。原始日志保留，未把shell退出码2当作训练失败或成功证明。
 - 未重新跑第二组独立随机种子、没有显著性检验、没有真人听音。测试mixed的小幅收益与验证mixed反向结果均披露于FINAL_REPORT.md。
 - 交付包解压后的CPU复算、压缩包SHA-256和文件校验结果随包另附于`delivery/verification.json`与`.sha256`文件；压缩包内部本文件记录源码/原始结果核验，外部文件记录归档后核验，避免自引用归档校验值。
+
+## 局限
+
+- 未验证全新机器离线安装；未做真人听音、多种子或显著性检验。
+- ripwire 无 HEAD 基线，且对动态分派与未索引文件不可见。

@@ -45,12 +45,7 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 - 指标口径：MER = 编辑错误数 ÷ 参考计分单位数，中文按字、英文按词混合计数；CER 只统计纯中文子集（按非空白字符）；WER 只统计纯英文子集（按英文词）。`jiwer.mer` 不是本实验的 MER。
 - pp 与百分比的差别：15.918% → 15.631% 是 **−0.287pp**（约 −1.8% 的相对变化），不是“降低 0.287%”。
 
-**结论边界**（这四条限定了上表数字能支持什么）：
-
-1. 预设方向性门槛通过，但收益很小：mixed 净减少 16 个编辑错误，整体只净减少 7 个。
-2. **验证集 mixed 方向相反**：B 19.854% → C 20.146%（+0.292pp）。单随机种子、无显著性检验，因此只能说“本次运行有微弱方向性收益”，不能说过采样稳定更优。
-3. 两组匹配的是**每步 8 条 × 30 秒补齐输入**（用户预先选定），不是真实语音秒数；C 实际多约 0.850 小时语音，仍是混杂因素。
-4. 论文的 27.05% 测试 MER 来自 wav2vec 2.0，不是原始 Whisper-small 基线；A 是本项目实测的零样本基线。
+**结论**：预设方向性门槛通过，收益很小——mixed 净减少 16 个编辑错误、整体净减少 7 个；验证集 mixed 方向相反（B 19.854% → C 20.146%）。全部局限见第 8 节。
 
 ### 2.1 这次到底怎样训练的
 
@@ -69,10 +64,10 @@ B、C 从同一个原模型出发、LoRA 初始化相同，C 不接续 B。每�
 | 训练耗时 | 单步中位数 B 8.73 s、C 2.48 s；按每步日志累加 B 2.02 h、C 0.55 h | `evidence/logs/B_train*.log`、`evidence/logs/C_train.log` |
 | 语言前缀 | mixed 与中文都喂 `zh` 语言 token，英文喂 `en`；task 固定 `transcribe`；训练与推理读同一份映射，不存在训练用中文前缀、评测换标签的情况 | `config.json`、`asr.py` |
 
-两个测量口径，避免误读：
+两个数字的测量范围：
 
-- **显存**：数字来自 PyTorch 进程的 `max_memory_allocated/reserved`，不含驱动、桌面和其它进程。B 训练期间全卡占用约 6.4 GiB，不能整体算作 Whisper 的需求。
-- **耗时**：B 的中断与两次续跑使墙钟达到 2 h 13 min，且同期有外部 GPU ASR 进程和视频转码争用，per-step 时间被拉长。因此 B/C、B/pilot 的耗时差异反映的是环境争用，不是采样策略的开销差异，**不要拿这组数字做性能对比**。
+- **显存**：PyTorch 进程的 `max_memory_allocated/reserved` 峰值，不含驱动、桌面和其它进程；B 训练期间全卡占用约 6.4 GiB。
+- **耗时**：B 经历一次中断和两次续跑，墙钟 2 h 13 min，同期还有其它 GPU ASR 与视频转码进程；B 最后 300 步平均 2.80 s/步。
 
 ## 3. 四种使用方式
 
@@ -225,19 +220,22 @@ uv run python summarize.py
 - `artifacts/{pilot,B,C}/`：`config.json`、`initialization.json`、`sampling.json`、`progress.json`、`training_complete.json`、`train.jsonl`、`sample_indices.npy`、`resume.pt`。
 - `artifacts/comparison.json`、`artifacts/training_summary.json`：统一重算的指标、门槛与对照可比性。
 - `artifacts/error_review_40.json`：固定种子抽取的 40 条 mixed 样例；AI 复核报告在 `reports/ERROR_ANALYSIS.md`。
-- `reports/RESULTS.md`：由 `summarize.py` 生成；`reports/FINAL_REPORT.md`、`ERROR_ANALYSIS.md`、`VERIFICATION.md` 为 AI 整理的非自动汇总文档（不是人工撰写，也不是人工听音核验）。
+- `reports/RESULTS.md`：由 `summarize.py` 生成；`reports/FINAL_REPORT.md`、`ERROR_ANALYSIS.md`、`VERIFICATION.md` 为 AI 整理的非自动汇总文档。
 - `evidence/`：过程记录，不是结论——训练/评测原始日志（`logs/`）、里程碑与中断说明（`milestones/`）、审查与测试快照（`reviews/`）、机器核验 JSON（`checks/`）。引用结论仍以 `reports/` 与 `artifacts/` 为准，索引见 `evidence/README.md`。
 - `SHA256SUMS`：本版 101 个交付文件的 SHA-256 清单。解压后运行 `sha256sum -c SHA256SUMS` 核对完整性；修改代码、文档或派生文件后需要重新生成清单，不能继续引用旧校验结论。该清单与 `EXTERNAL_SHA256SUMS` 描述的是两个归档包内部的结构；仓库工作树在本版交付后做过目录整理（见 `evidence/README.md`），路径可能与清单不同，核验请在归档解压目录执行。
 - `delivery/asr-finetune-complete.tar.gz`：可移交包，不含 `.venv`、基础模型缓存和 `data/` 特征。
 
-**交付核验**：审查后的同版代码、权重与预测已在隔离解压目录通过 **17 项测试、101 个文件哈希和 CPU 指标精确复算**；验证时禁用 GPU、阻断网络连接与 DNS，并使用空模型缓存。正式归档后的结果、大小与哈希另附于 `delivery/verification.json` 和 `.sha256` 文件，避免归档自引用；审查前的 7 项/90 文件快照保存在 `delivery/pre-review/`。核验复用了本机已安装的固定依赖，并不证明全新机器可以完全离线安装或重训；重新生成仍需准备数据与基础模型。
+**交付核验**：审查后的同版代码、权重与预测已在隔离解压目录通过 **17 项测试、101 个文件哈希和 CPU 指标精确复算**；验证时禁用 GPU、阻断网络连接与 DNS，并使用空模型缓存。正式归档后的结果、大小与哈希另附于 `delivery/verification.json` 和 `.sha256` 文件，避免归档自引用；审查前的 7 项/90 文件快照保存在 `delivery/pre-review/`。核验复用了本机已安装的固定依赖；重新生成仍需准备数据与基础模型。
 
-## 8. 解释边界
+## 8. 局限
 
-- ASCEND 论文的 27.05% MER 属于 wav2vec 2.0，不是 Whisper-small；本项目不宣称复现论文 Whisper 结果。
-- 计分使用 ASCEND 作者兼容的对称标点清理、小写与 jieba 分词，保留语气词与重复；未做繁简转换或数字展开。
-- 解码用已知语言标签提供 zh/en 前缀（oracle 设置），不是自动语言检测评估。
-- 测试集被用于 B→C 的进入门槛，存在选择偏差风险；0.3pp 是事先约定的容忍范围，不是统计验证过的噪声界。
-- 40 条逐例分析是 **AI 文本对照**，不是真人听音；`0%` 输出崩溃率不代表语义正确或可生产部署。
-- 未做多随机种子、显著性检验、SenseVoiceSmall 对比、40% 敏感性组、真人听音，也未验证部署端自动语言检测。硬门槛失败不等于完成。
-- RTX 4060 Laptop 8GB 的显存数字是 PyTorch 进程的 allocated/reserved 峰值，不含驱动、桌面及其它进程占用，不能把全卡占用都归给本次训练。
+- **单随机种子**：每组只跑一次（seed 42），没有多种子复现、显著性检验或置信区间。
+- **效果很小**：mixed 净减少 16 个编辑错误、整体净减少 7 个；验证集 mixed 方向相反，B 19.854% → C 20.146%。
+- **输入预算按补齐秒数匹配**：每步 8 条 × 30 秒补齐，不是真实语音秒数；C 实际多约 0.850 h 语音，暴露量差异与采样比例混在一起。
+- **测试集参与决策**：测试集用于 B→C 的进入门槛，存在选择偏差；0.3pp 是事先约定的容忍范围，不是统计噪声界。
+- **解码给定语言标签**：mixed 与中文用 `zh`、英文用 `en`，是 oracle 设置，不评估自动语言检测。
+- **错误分析是文本对照**：40 条由 AI 读文本归类，未听音；音近字与疑似翻译的成因只标“疑似”。
+- **计分口径**：ASCEND 作者兼容的对称标点清理、小写与 jieba 分词，保留语气词与重复；未做繁简转换或数字展开。
+- **与论文不可直接对比**：论文 27.05% 的测试 MER 出自 wav2vec 2.0；A 是本项目实测的 Whisper-small 零样本基线。
+- **硬件数字的范围**：显存是 PyTorch 进程峰值；耗时受同期共享负载影响，不反映采样策略的开销。
+- **未覆盖**：SenseVoiceSmall 对比、40% 敏感性组、真人听音、部署端自动语言检测。
