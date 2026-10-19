@@ -30,7 +30,7 @@ B、C 均从同一基础模型出发，LoRA 初始化一致，C 不接续 B 的�
 | 交付核验 | 隔离解压（禁用 GPU、断网）下 17 项测试、101 个文件哈希、CPU 精确复算通过 | [VERIFICATION](reports/VERIFICATION.md) · 第 8 节 |
 | CS-Dialogue 外部验证 | 450 条域外混合语音：A 26.181%、B 12.275%、C 13.231%，C 未复现过采样优势 | 第 3 节 · [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md) |
 | FLEURS 单语保留 | 中文 CER 降约 8pp；英文 WER 分别 +1.047、+0.914pp | [EXTERNAL_EVAL_REPORT](reports/EXTERNAL_EVAL_REPORT.md) |
-| 重跑与重训 | 四种使用方式：只读结果、CPU 重算、重新生成、隔离副本从头重训 | 第 4 节 |
+| 重跑与重训 | 四种使用方式：只读结果、CPU 复算、重新生成、隔离副本从头重训 | 第 4 节 |
 
 ## 2. 主要结果
 
